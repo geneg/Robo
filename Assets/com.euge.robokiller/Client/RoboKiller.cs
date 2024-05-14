@@ -12,6 +12,7 @@ namespace com.euge.robokiller.Client
 {
     public class RoboKiller : Minigame
     {
+        private Themes _themesFeature;
         private Levels _levelsFeature;
         private Scroll _scrollFeature;
         
@@ -20,7 +21,7 @@ namespace com.euge.robokiller.Client
         
         //todo: remove this
         private int progress = 0;
-
+        
         public RoboKiller(VisualBridge visualBridge)
         {
             _visualBridge = visualBridge;
@@ -33,6 +34,7 @@ namespace com.euge.robokiller.Client
             
             AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
             
+            _themesFeature = new Themes(appConfig);
             _levelsFeature = new Levels(appConfig, _visualBridge.LevelParent);
             _scrollFeature = new Scroll(_visualBridge.ScrollRect);
             
@@ -42,8 +44,11 @@ namespace com.euge.robokiller.Client
 
         private async void InitializeFeatures()
         {
+            await _themesFeature.Initialize();
             await _levelsFeature.Initialize();
             _scrollFeature.Initialize();
+            
+            _themesFeature.ApplyTheme(_levelsFeature);
             
             float pos = _levelsFeature.GetPoiNormalizedPos(progress);
             _scrollFeature.MoveInstant(pos);

@@ -1,3 +1,5 @@
+using System;
+
 namespace com.euge.robokiller.Client
 {
 	public class Enums
@@ -5,7 +7,8 @@ namespace com.euge.robokiller.Client
 		
 	}
 	
-	public enum POIType
+	[Serializable]
+	public enum PoiType
 	{
 		StartPoint,
 		Enemy,

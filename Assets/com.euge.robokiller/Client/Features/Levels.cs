@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
@@ -8,7 +9,7 @@ using UnityEngine.AddressableAssets;
 
 namespace com.euge.robokiller.Client.Features
 {
-	public class Levels : BaseService
+	public class Levels : BaseService, IThemeable
 	{
 		private readonly string _levelsConfigurationKey;
 		private int _currentLevelIndex;
@@ -41,6 +42,12 @@ namespace com.euge.robokiller.Client.Features
 		{
 			float yPos = _level.PointsOfInterest[progress].transform.position.y;
 			return (yPos - _start) / (_end - _start);
+		}
+
+		public List<ThemeableElement> GetThemeableElements()
+		{
+			// another elements can be added to list here if needed
+			return _level.GetThemeableElements();	
 		}
 	}
 }

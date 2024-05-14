@@ -1,8 +1,12 @@
+
+using System.Collections.Generic;
 using UnityEngine;
+
 
 namespace com.euge.robokiller.Client.Features
 {
-    public class GameLevel : MonoBehaviour
+
+    public class GameLevel : MonoBehaviour, IThemeable
     {
         [Header("Game Level Path Curve for Hero Movement")]
         [SerializeField] private AnimationCurve _pathCurve;
@@ -12,5 +16,8 @@ namespace com.euge.robokiller.Client.Features
 
         public POI[] PointsOfInterest => _pointsOfInterest;
         
+        [SerializeField] private List<ThemeableElement> _themeableElements;
+
+        public List<ThemeableElement> GetThemeableElements() => _themeableElements;
     }
 }

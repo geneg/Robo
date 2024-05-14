@@ -4406,6 +4406,11 @@ MonoBehaviour:
   - {fileID: 8867448367385105934}
   - {fileID: 3575559393110220863}
   - {fileID: 9195137711183223109}
+  _themeableElements:
+  - ThemeProperty: background
+    ThemeableImage: {fileID: 3625463835444807467}
+  - ThemeProperty: path
+    ThemeableImage: {fileID: 505421296624748400}
 --- !u!1 &7926264095006129263
 GameObject:
   m_ObjectHideFlags: 0

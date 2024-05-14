@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5249b4cda54ca2a81e211f1781228e, type: 3}
+  m_Name: WinterTheme
+  m_EditorClassIdentifier: 
+  background: {fileID: 21300000, guid: 29cd41ae8c0434604bffb27a85dd34cf, type: 3}
+  path: {fileID: 21300000, guid: 5944db3f9d8f84c26ba464e68397f03d, type: 3}
+  player:
+  - {fileID: 21300000, guid: f0c5606fa4fa94507ad12644796cdc88, type: 3}
+  - {fileID: 21300000, guid: 3d9e85dad56444d66800b26b9ada62e4, type: 3}
+  poi:
+  - type: 1
+    sprites:
+    - {fileID: 21300000, guid: 59e91c19b6471459daf0398798663c79, type: 3}
+    - {fileID: 21300000, guid: 4747970e8a169465eaa80a22f9baf6e3, type: 3}
+  - type: 1
+    sprites:
+    - {fileID: 21300000, guid: e89c789dfa8424a7b9ebc4ba006ee1aa, type: 3}
+    - {fileID: 21300000, guid: 7701bf6bb706445ea998dbce95e7fa65, type: 3}
+  - type: 2
+    sprites:
+    - {fileID: 21300000, guid: bdc7dc7ec1d6648c1a8c607eb243ae6a, type: 3}
+    - {fileID: 21300000, guid: 66b9f7320c0f94b0aaccc5e735d02864, type: 3}

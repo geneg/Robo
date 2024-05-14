@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89e284d3692b48ba8fa02263345d0ec6, type: 3}
-  m_Name: AppConfig
+  m_Script: {fileID: 11500000, guid: 74aa89db46979456d9ef11ad73a7af8e, type: 3}
+  m_Name: ThemesConfig
   m_EditorClassIdentifier: 
-  BuildVersion: 100001
-  LevelsConfigurationKey: LevelsConfig
-  ThemesConfigurationKey: ThemesConfig
+  Themes:
+  - themeName: Default
+    addressableKey: DefaultTheme
+  - themeName: Winter Event
+    addressableKey: WinterTheme
+  CurrentThemeIndex: 0
