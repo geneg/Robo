@@ -18,12 +18,12 @@ MonoBehaviour:
   m_GUID: 823ddea8c652e450a9ff48f0c5fa9153
   m_SerializeEntries:
   - m_GUID: 7c890c3b203354ad098e1fbc921c44b3
-    m_Address: Assets/Images/Common
+    m_Address: Common
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6183dfa3c921c43fb8127607d25041d2
-    m_Address: Assets/Prefabs/Levels/Level1.prefab
+  - m_GUID: 165d05fa7e51b4fb19b02687441e78cc
+    m_Address: AppConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

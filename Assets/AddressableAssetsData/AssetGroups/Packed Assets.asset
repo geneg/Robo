@@ -18,12 +18,22 @@ MonoBehaviour:
   m_GUID: de08282245145462db2d5d5ff0771af5
   m_SerializeEntries:
   - m_GUID: 62a47d9008b5346eb86fda622245b269
-    m_Address: Assets/Images/SnowTheme
+    m_Address: SnowTheme
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b243ad09098c42e89e46d78d7a52031
-    m_Address: Assets/Images/DefaultTheme
+    m_Address: DefaultTheme
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6183dfa3c921c43fb8127607d25041d2
+    m_Address: Level1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2c89b2a82e334bf4a6c6bc79cc48972
+    m_Address: LevelsConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
