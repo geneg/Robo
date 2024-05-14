@@ -39,6 +39,12 @@ namespace com.euge.robokiller.Client
 				case POIType.Rank:
 					_image.color = Color.green;
 					break;
+				case POIType.StartPoint:
+					_image.color = Color.blue;
+					break;
+				case POIType.FinishPoint:
+					_image.color = Color.magenta;
+					break;
 			}
 		}
 	#endif

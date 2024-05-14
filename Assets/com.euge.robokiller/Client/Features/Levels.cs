@@ -13,6 +13,9 @@ namespace com.euge.robokiller.Client.Features
 		private readonly string _levelsConfigurationKey;
 		private int _currentLevelIndex;
 		private readonly Transform _parent;
+		private GameLevel _level;
+		private float _start;
+		private float _end;
 
 		public Levels(AppConfiguration appConfig, Transform parent) : base()
 		{
@@ -23,10 +26,21 @@ namespace com.euge.robokiller.Client.Features
 		public async Task Initialize()
 		{
 			LevelsConfigugation levelsConfig = await Loaders.LoadAsset<LevelsConfigugation>(_levelsConfigurationKey);
-			GameLevel level = await Loaders.Instantiate<GameLevel>(levelsConfig.Levels[_currentLevelIndex].addressableKey, _parent);
+			_level = await Loaders.Instantiate<GameLevel>(levelsConfig.Levels[_currentLevelIndex].addressableKey, _parent);
+
+			if (_level.PointsOfInterest == null || _level.PointsOfInterest.Length == 0)
+			{
+				throw new System.Exception("PointsOfInterest is null or empty");
+			}
 			
-			Debug.Log($"Level loaded: {level}");
-			
+			_start = _level.PointsOfInterest[0].transform.position.y;
+			_end = _level.PointsOfInterest[^1].transform.position.y;
+		}
+		
+		public float GetPoiNormalizedPos(int progress)
+		{
+			float yPos = _level.PointsOfInterest[progress].transform.position.y;
+			return (yPos - _start) / (_end - _start);
 		}
 	}
 }

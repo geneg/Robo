@@ -7,10 +7,10 @@ namespace com.euge.robokiller.Client
 	
 	public enum POIType
 	{
+		StartPoint,
 		Enemy,
 		Chest,
 		Rank,
-		Ally,
-		Neutral,
+		FinishPoint,
 	}
 }

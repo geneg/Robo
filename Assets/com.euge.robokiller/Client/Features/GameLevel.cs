@@ -9,6 +9,8 @@ namespace com.euge.robokiller.Client.Features
         [Space(10)]
         [Header("POI Coords and Types")]
         [SerializeField] private POI[] _pointsOfInterest;
-    
+
+        public POI[] PointsOfInterest => _pointsOfInterest;
+        
     }
 }

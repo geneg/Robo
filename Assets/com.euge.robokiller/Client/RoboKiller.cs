@@ -5,6 +5,7 @@ using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features;
+using UnityEngine;
 
 
 namespace com.euge.robokiller.Client
@@ -12,8 +13,14 @@ namespace com.euge.robokiller.Client
     public class RoboKiller : Minigame
     {
         private Levels _levelsFeature;
+        private Scroll _scrollFeature;
+        
         private readonly VisualBridge _visualBridge;
         
+        
+        //todo: remove this
+        private int progress = 0;
+
         public RoboKiller(VisualBridge visualBridge)
         {
             _visualBridge = visualBridge;
@@ -27,6 +34,7 @@ namespace com.euge.robokiller.Client
             AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
             
             _levelsFeature = new Levels(appConfig, _visualBridge.LevelParent);
+            _scrollFeature = new Scroll(_visualBridge.ScrollRect);
             
             InitializeFeatures();
             
@@ -35,24 +43,11 @@ namespace com.euge.robokiller.Client
         private async void InitializeFeatures()
         {
             await _levelsFeature.Initialize();
+            _scrollFeature.Initialize();
+            
+            float pos = _levelsFeature.GetPoiNormalizedPos(progress);
+            _scrollFeature.MoveInstant(pos);
         }
         
-        // Start is called before the first frame update
-        void Start()
-        {
-            //levels
-            //configuration loader
-        //load level
-        //init level
-        //init player
-        //state machine
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 }
