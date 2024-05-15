@@ -12,10 +12,11 @@ namespace com.euge.robokiller.Client
 {
     public class RoboKiller : Minigame
     {
-        private Themes _themesFeature;
-        private Levels _levelsFeature;
-        private Scroll _scrollFeature;
-        
+        private ThemesFeature _themesFeatureFeature;
+        private LevelsFeature _levelsFeatureFeature;
+        private ScrollFeature _scrollFeatureFeature;
+        private PlayerFeature _playerFeature;
+
         private readonly VisualBridge _visualBridge;
         
         
@@ -34,9 +35,10 @@ namespace com.euge.robokiller.Client
             
             AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
             
-            _themesFeature = new Themes(appConfig);
-            _levelsFeature = new Levels(appConfig, _visualBridge.LevelParent);
-            _scrollFeature = new Scroll(_visualBridge.ScrollRect);
+            _themesFeatureFeature = new ThemesFeature(appConfig);
+            _levelsFeatureFeature = new LevelsFeature(appConfig, _visualBridge.GameContentParent);
+            _playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent);
+            _scrollFeatureFeature = new ScrollFeature(_visualBridge.ScrollRect);
             
             InitializeFeatures();
             
@@ -44,14 +46,17 @@ namespace com.euge.robokiller.Client
 
         private async void InitializeFeatures()
         {
-            await _themesFeature.Initialize();
-            await _levelsFeature.Initialize();
-            _scrollFeature.Initialize();
+            await _themesFeatureFeature.Initialize();
+            await _levelsFeatureFeature.Initialize();
+            await _playerFeature.Initialize();
             
-            _themesFeature.ApplyTheme(_levelsFeature);
+            _scrollFeatureFeature.Initialize();
             
-            float pos = _levelsFeature.GetPoiNormalizedPos(progress);
-            _scrollFeature.MoveInstant(pos);
+            _themesFeatureFeature.ApplyTheme(_levelsFeatureFeature);
+            _themesFeatureFeature.ApplyTheme(_playerFeature);
+            
+            float pos = _levelsFeatureFeature.GetPoiNormalizedPos(progress);
+            _scrollFeatureFeature.MoveInstant(pos);
         }
         
     }

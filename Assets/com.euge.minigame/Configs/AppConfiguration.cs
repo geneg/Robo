@@ -8,5 +8,6 @@ namespace com.euge.minigame.Configs
 		public int BuildVersion;
 		public string LevelsConfigurationKey;
 		public string ThemesConfigurationKey;
+		public string PlayerConfigurationKey;
 	}
 }

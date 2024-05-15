@@ -1,16 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace com.euge.robokiller.Client
 {
 	public class VisualBridge : MonoBehaviour
 	{
-		public Transform LevelParent => _levelParent;
+		public Transform GameContentParent => _gameContentParent;
 		public ScrollRect ScrollRect => _scrollRect;
 		
-		[Header("Game Level Container")]
-		[SerializeField] private Transform _levelParent;
-
+		[FormerlySerializedAs("_levelParent")]
+		[Header("Game Content Container")]
+		[SerializeField] private Transform _gameContentParent;
+		
 		[SerializeField] private ScrollRect _scrollRect;
 	}
 }

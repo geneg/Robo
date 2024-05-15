@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 
 namespace com.euge.robokiller.Client.Features
 {
-	public class Levels : BaseService, IThemeable
+	public class LevelsFeature : BaseService, IThemeable
 	{
 		private readonly string _levelsConfigurationKey;
 		private int _currentLevelIndex;
@@ -18,7 +18,7 @@ namespace com.euge.robokiller.Client.Features
 		private float _start;
 		private float _end;
 
-		public Levels(AppConfiguration appConfig, Transform parent) : base()
+		public LevelsFeature(AppConfiguration appConfig, Transform parent) : base()
 		{
 			_levelsConfigurationKey = appConfig.LevelsConfigurationKey;
 			_parent = parent;

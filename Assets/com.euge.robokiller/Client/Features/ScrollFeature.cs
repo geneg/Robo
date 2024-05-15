@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 namespace com.euge.robokiller.Client.Features
 {
-	public class Scroll : BaseService
+	public class ScrollFeature : BaseService
 	{
 		private readonly ScrollRect _scrollRect;
 		private float _viewportHeight;
 		private float _contentHeight;
 		private float _normalizedViewportHeight;
 
-		public Scroll(ScrollRect scrollRect) : base()
+		public ScrollFeature(ScrollRect scrollRect) : base()
 		{
 			_scrollRect = scrollRect;
 		}

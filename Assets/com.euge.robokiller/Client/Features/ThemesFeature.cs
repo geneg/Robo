@@ -15,17 +15,17 @@ namespace com.euge.robokiller.Client.Features
 	public class ThemeableElement
 	{
 		public string ThemeProperty;
-		public Image ThemeableImage;
+		public Image[] ThemeableImage;
 	}
 	
-	public class Themes : BaseService
+	public class ThemesFeature : BaseService
 	{
 		private readonly string _themesConfigurationKey;
 		
 		public ThemeTemplate Theme => _theme;
 		private ThemeTemplate _theme;
 		
-		public Themes(AppConfiguration appConfig) : base()
+		public ThemesFeature(AppConfiguration appConfig) : base()
 		{
 			_themesConfigurationKey = appConfig.ThemesConfigurationKey;
 		}
@@ -42,10 +42,31 @@ namespace com.euge.robokiller.Client.Features
 			{
 				FieldInfo fieldInfo = _theme.GetType().GetField(themeableElement.ThemeProperty);
 
-				if (fieldInfo == null || fieldInfo.FieldType != typeof(Sprite)) continue;
+				if (fieldInfo != null)
+				{
+					if(fieldInfo.FieldType == typeof(Sprite))
+					{
+						Sprite sprite = fieldInfo.GetValue(_theme) as Sprite;
+						foreach (Image image in themeableElement.ThemeableImage)
+						{
+							image.sprite = sprite;
+						}
+					}
+					
+					if(fieldInfo.FieldType == typeof(Sprite[]))
+					{
+						Sprite[] sprites = fieldInfo.GetValue(_theme) as Sprite[];
+						
+						for(int i = 0; i < themeableElement.ThemeableImage.Length; i++)
+						{
+							if (sprites != null && sprites.Length > i)
+							{
+								themeableElement.ThemeableImage[i].sprite = sprites[i];
+							}
+						}
+					}
+				}
 
-				Sprite sprite = fieldInfo.GetValue(_theme) as Sprite;
-				themeableElement.ThemeableImage.sprite = sprite;
 			}
 		}
 		
