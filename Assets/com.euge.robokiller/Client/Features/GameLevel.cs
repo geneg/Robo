@@ -8,8 +8,9 @@ namespace com.euge.robokiller.Client.Features
 
     public class GameLevel : MonoBehaviour, IThemeable
     {
-        [Header("Game Level Path Curve for Hero Movement")]
-        [SerializeField] private AnimationCurve _pathCurve;
+        [Header("Game Level Path for Hero Movement")]
+        [SerializeField] private LineRenderer _movementPath;
+        
         [Space(10)]
         [Header("POI Coords and Types")]
         [SerializeField] private POI[] _pointsOfInterest;
@@ -19,5 +20,7 @@ namespace com.euge.robokiller.Client.Features
         [SerializeField] private List<ThemeableElement> _themeableElements;
 
         public List<ThemeableElement> GetThemeableElements() => _themeableElements;
+        public LineRenderer MovementPath => _movementPath;
+       
     }
 }

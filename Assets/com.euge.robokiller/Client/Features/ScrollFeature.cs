@@ -27,7 +27,11 @@ namespace com.euge.robokiller.Client.Features
 		{
 			float adjustedPosition = normalizedPosition + _normalizedViewportHeight / (-2f);
 			_scrollRect.verticalNormalizedPosition = adjustedPosition;
-		}	
-		
+		}
+
+		public Vector2 ShiftPosition(Vector2 pathPosition)
+		{
+			return pathPosition - new Vector2(0, _viewportHeight);
+		}
 	}
 }

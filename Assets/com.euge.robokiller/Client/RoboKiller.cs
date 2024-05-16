@@ -57,7 +57,18 @@ namespace com.euge.robokiller.Client
             
             float pos = _levelsFeatureFeature.GetPoiNormalizedPos(progress);
             _scrollFeatureFeature.MoveInstant(pos);
+
+            MovePlayerToStartPosition();
+
         }
+        
+        private void MovePlayerToStartPosition()
+        {
+            Vector2 pathPosition = _levelsFeatureFeature.CurrentPathPosition();
+            pathPosition = _scrollFeatureFeature.ShiftPosition(pathPosition);
+            _playerFeature.MoveInstant(pathPosition);
+        }
+        
         
     }
 }

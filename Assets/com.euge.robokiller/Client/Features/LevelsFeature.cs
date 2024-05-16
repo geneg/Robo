@@ -17,6 +17,7 @@ namespace com.euge.robokiller.Client.Features
 		private GameLevel _level;
 		private float _start;
 		private float _end;
+		private int _pathIndex;
 
 		public LevelsFeature(AppConfiguration appConfig, Transform parent) : base()
 		{
@@ -48,6 +49,11 @@ namespace com.euge.robokiller.Client.Features
 		{
 			// another elements can be added to list here if needed
 			return _level.GetThemeableElements();	
+		}
+		
+		public Vector2 CurrentPathPosition()
+		{
+			return _level.MovementPath.GetPosition(_pathIndex);
 		}
 	}
 }
