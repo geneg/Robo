@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
@@ -25,12 +26,12 @@ namespace com.euge.robokiller.Client.Features
 		public ThemeTemplate Theme => _theme;
 		private ThemeTemplate _theme;
 		
-		public ThemesFeature(AppConfiguration appConfig) : base()
+		public ThemesFeature(AppConfiguration appConfig, ServiceResolver resolver) : base(resolver)
 		{
 			_themesConfigurationKey = appConfig.ThemesConfigurationKey;
 		}
 
-		public async Task Initialize()
+		public override async Task Initialize()
 		{
 			ThemesConfigugation themesConfig = await Loaders.LoadAsset<ThemesConfigugation>(_themesConfigurationKey);
 			_theme = await Loaders.LoadAsset<ThemeTemplate>(themesConfig.Themes[themesConfig.CurrentThemeIndex].addressableKey);

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Configs;
-using DG.Tweening;
 using UnityEngine;
 
 
@@ -21,14 +21,13 @@ namespace com.euge.robokiller.Client.Features
 		private int _pathIndex;
 		public bool IsLastSection => _pathIndex >= _gameLevel.MovementPath.positionCount - 1;
 		
-		public PathFeature(AppConfiguration appConfig, Transform parent) : base()
+		public PathFeature(AppConfiguration appConfig, Transform parent, ServiceResolver resolver) : base(resolver)
 		{
 			_levelsConfigurationKey = appConfig.LevelsConfigurationKey;
 			_parent = parent;
-			
 		}
 
-		public async Task Initialize()
+		public override async Task Initialize()
 		{
 			LevelsConfigugation levelsConfig = await Loaders.LoadAsset<LevelsConfigugation>(_levelsConfigurationKey);
 			_gameLevel = await Loaders.Instantiate<GameLevel>(levelsConfig.Levels[_currentLevelIndex].addressableKey, _parent);
@@ -53,43 +52,10 @@ namespace com.euge.robokiller.Client.Features
 			return _gameLevel.GetThemeableElements();	
 		}
 		
-		public Vector2 GetNextPathPoint()
+		//encapsulate the path logic
+		public Vector2 GetPathPoint(int index)
 		{
-			if (!IsLastSection)
-			{
-				return _gameLevel.MovementPath.GetPosition(_pathIndex++);
-			}
-
-			_pathIndex = 0;
-			return _gameLevel.MovementPath.GetPosition(_gameLevel.MovementPath.positionCount - 1);
-		}
-		
-		public void MovePlayerToStartPosition(RectTransform playerTransform)
-		{
-			_pathIndex = 0;
-			playerTransform.anchoredPosition = _gameLevel.MovementPath.GetPosition(_pathIndex++);
-		}
-		
-		public void BeginPlayerMove(RectTransform player)
-		{
-			Vector2 currentPoint= _gameLevel.MovementPath.GetPosition(_pathIndex - 1);
-			Vector2 nextPoint = GetNextPathPoint();
-			
-			float distance = Vector2.Distance(currentPoint, nextPoint);
-			float speed = 200f; // Define your speed here
-			
-			float duration = distance / speed;
-			
-			player.DOAnchorPos(nextPoint, duration, true)
-				.SetEase(IsLastSection ? Ease.OutCubic : Ease.Linear)
-				.OnComplete(() =>
-				{
-					if (!IsLastSection)
-					{
-						BeginPlayerMove(player);
-					}
-				});
-
+			return _gameLevel.MovementPath.GetPosition(index);
 		}
 	}
 }
