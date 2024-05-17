@@ -31,13 +31,14 @@ namespace com.euge.robokiller.Client.Features
 		{
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
 			_player = await Loaders.Instantiate<Player>(_playerConfig.AddressableKey, _parent);
-
+			
 			_pathFeature = GetServiceResolver.GetService<PathFeature>(); // Features can know about other features
 		}
 
 		public void BeginPlayerMove()
 		{
 			_playerPathIndex = 0;
+			_player.SetIdlePose();
 			_player.PlayerTransform.anchoredPosition = _pathFeature.GetPathPoint(_playerPathIndex++);
 			
 			CyclicPlayerMove();

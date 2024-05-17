@@ -16,10 +16,6 @@ namespace com.euge.robokiller.Client
 	{
 		private readonly ServiceResolver _clientServiceResolver = new ServiceResolver();
 		private readonly VisualBridge _visualBridge;
-
-
-		//todo: remove this
-		private int progress = 0;
 		private ThemesFeature _themesFeatureFeature;
 		private PathFeature _pathFeatureFeature;
 		private PlayerFeature _playerFeature;
