@@ -5,6 +5,7 @@ using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -13,7 +14,7 @@ namespace com.euge.robokiller.Client
     public class RoboKiller : Minigame
     {
         private ThemesFeature _themesFeatureFeature;
-        private LevelsFeature _levelsFeatureFeature;
+        private PathFeature _pathFeatureFeature;
         private ScrollFeature _scrollFeatureFeature;
         private PlayerFeature _playerFeature;
 
@@ -36,7 +37,7 @@ namespace com.euge.robokiller.Client
             AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
             
             _themesFeatureFeature = new ThemesFeature(appConfig);
-            _levelsFeatureFeature = new LevelsFeature(appConfig, _visualBridge.GameContentParent);
+            _pathFeatureFeature = new PathFeature(appConfig, _visualBridge.GameContentParent);
             _playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent);
             _scrollFeatureFeature = new ScrollFeature(_visualBridge.ScrollRect);
             
@@ -47,27 +48,21 @@ namespace com.euge.robokiller.Client
         private async void InitializeFeatures()
         {
             await _themesFeatureFeature.Initialize();
-            await _levelsFeatureFeature.Initialize();
+            await _pathFeatureFeature.Initialize();
             await _playerFeature.Initialize();
             
             _scrollFeatureFeature.Initialize();
             
-            _themesFeatureFeature.ApplyTheme(_levelsFeatureFeature);
+            _themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
             _themesFeatureFeature.ApplyTheme(_playerFeature);
             
-            float pos = _levelsFeatureFeature.GetPoiNormalizedPos(progress);
+            float pos = _pathFeatureFeature.GetPoiNormalizedPos(progress);
             _scrollFeatureFeature.MoveInstant(pos);
-
-            MovePlayerToStartPosition();
-
+            
+            _pathFeatureFeature.MovePlayerToStartPosition(_playerFeature.PlayerTransform);
+            _pathFeatureFeature.BeginPlayerMove(_playerFeature.PlayerTransform);
         }
-        
-        private void MovePlayerToStartPosition()
-        {
-            Vector2 pathPosition = _levelsFeatureFeature.CurrentPathPosition();
-            pathPosition = _scrollFeatureFeature.ShiftPosition(pathPosition);
-            _playerFeature.MoveInstant(pathPosition);
-        }
+
         
         
     }

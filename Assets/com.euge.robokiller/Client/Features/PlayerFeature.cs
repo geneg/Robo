@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using com.euge.minigame.Configs;
@@ -13,30 +14,24 @@ namespace com.euge.robokiller.Client.Features
 		public List<ThemeableElement> GetThemeableElements() => _player.GetThemeableElements();
 
 		private string _playerConfigurationKey;
-		private Transform _parent;
 		private Player _player;
+		private PlayerConfigugation _playerConfig;
+		private Transform _parent;
+		
+		public RectTransform PlayerTransform => _player.PlayerTransform;
 		
 		public PlayerFeature(AppConfiguration appConfig, Transform parent) : base()
 		{
-			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
 			_parent = parent;
+			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
 		}
-
 		
 		public async Task Initialize()
 		{
-			PlayerConfigugation playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
-			_player = await Loaders.Instantiate<Player>(playerConfig.AddressableKey, _parent);
+			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
+			_player = await Loaders.Instantiate<Player>(_playerConfig.AddressableKey, _parent);
 		}
+
 		
-		public void Move(Vector2[] position)
-		{
-			//_player.transform.localPosition = position;
-		}
-		
-		public void MoveInstant(Vector2 position)
-		{
-			_player.transform.localPosition = position;
-		}
 	}
 }

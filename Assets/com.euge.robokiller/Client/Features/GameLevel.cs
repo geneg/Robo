@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,10 @@ namespace com.euge.robokiller.Client.Features
 
         public List<ThemeableElement> GetThemeableElements() => _themeableElements;
         public LineRenderer MovementPath => _movementPath;
-       
+        
+        private void Start()
+        {
+            _movementPath.enabled = false;
+        }
     }
 }

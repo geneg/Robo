@@ -9,5 +9,7 @@ namespace com.euge.robokiller.Configs
 		public int InitialRank;
 		public int InitialHealth;
 		public int totalHealth;
+		public float Speed=1f;
+		public float VerticalOffset;
 	}
 }
