@@ -1,3 +1,5 @@
+using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+
 namespace com.euge.robokiller.Client.Features.ItemsFeature
 {
 	public class Rank : BaseItem

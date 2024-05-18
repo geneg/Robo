@@ -3,12 +3,11 @@ using System;
 namespace com.euge.robokiller.Client
 {
 	[Serializable]
-	public enum PoiType
+	public enum ItemType
 	{
-		StartPoint,
-		Enemy,
-		Chest,
-		Rank,
-		FinishPoint,
+		enemy = 0,
+		chest = 1,
+		rank = 2,
+
 	}
 }

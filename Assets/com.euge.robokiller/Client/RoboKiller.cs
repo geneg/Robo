@@ -54,7 +54,7 @@ namespace com.euge.robokiller.Client
 			_movementFeature = new MovementFeature();
 			_clientServiceResolver.RegisterService(_movementFeature);
 
-			_itemsFeature = new ItemsFeature();
+			_itemsFeature = new ItemsFeature(appConfig);
 			_clientServiceResolver.RegisterService(_itemsFeature);
 			#endregion
 
@@ -62,6 +62,7 @@ namespace com.euge.robokiller.Client
 
 			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
 			_themesFeatureFeature.ApplyTheme(_playerFeature);
+			_themesFeatureFeature.ApplyTheme(_itemsFeature);
 
 			BeginGame();
 		}

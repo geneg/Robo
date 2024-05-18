@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
@@ -58,6 +57,16 @@ namespace com.euge.robokiller.Client.Features.PathFeature
 		public Vector2 GetPathPoint(int index)
 		{
 			return _gameLevel.MovementPath.GetPosition(index);
+		}
+		
+		public ItemLayout[] GetPathItemsLayout()
+		{
+			return _gameLevel.PointsOfInterest;
+		}
+		
+		public Transform GetItemsParent()
+		{
+			return _gameLevel.ItemsParent;
 		}
 	}
 }

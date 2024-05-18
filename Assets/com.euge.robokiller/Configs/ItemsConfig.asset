@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89e284d3692b48ba8fa02263345d0ec6, type: 3}
-  m_Name: AppConfig
+  m_Script: {fileID: 11500000, guid: 3e95b8a0e2b548cbac7f84e91082bc4f, type: 3}
+  m_Name: ItemsConfig
   m_EditorClassIdentifier: 
-  BuildVersion: 100001
-  LevelsConfigurationKey: LevelsConfig
-  ThemesConfigurationKey: ThemesConfig
-  PlayerConfigurationKey: PlayerConfig
-  ItemsConfigurationKey: ItemsConfig
+  ChestKey: Chest
+  EnemyKey: Enemy
+  RankKey: Rank

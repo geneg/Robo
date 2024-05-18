@@ -9,7 +9,7 @@ namespace com.euge.robokiller.Configs
 	[Serializable]
 	public class PointOfInterest
 	{
-		public PoiType type;
+		public ItemType type;
 		public Sprite[] sprites;
 	}
 	

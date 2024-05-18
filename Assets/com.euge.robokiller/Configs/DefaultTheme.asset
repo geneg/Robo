@@ -20,13 +20,13 @@ MonoBehaviour:
   poi:
   - type: 1
     sprites:
-    - {fileID: 21300000, guid: 87e8ed1c5e86a4ae88b52df500376439, type: 3}
-    - {fileID: 21300000, guid: 3cea7f342c8814c6f83bc3162a3196d9, type: 3}
-  - type: 1
+    - {fileID: 21300000, guid: d54383ac26eb046cc954e11211fbc315, type: 3}
+    - {fileID: 21300000, guid: 5cfbbcebb01424394bc33b0df74c31cb, type: 3}
+  - type: 0
     sprites:
     - {fileID: 21300000, guid: 5e2cf9f25495d49108d53acdf5f05379, type: 3}
     - {fileID: 21300000, guid: 712d7f900bfbf4ee3aeaf159369580aa, type: 3}
   - type: 2
     sprites:
-    - {fileID: 21300000, guid: d54383ac26eb046cc954e11211fbc315, type: 3}
-    - {fileID: 21300000, guid: 5cfbbcebb01424394bc33b0df74c31cb, type: 3}
+    - {fileID: 21300000, guid: d54468e44fff24604810d2ecf038e8ba, type: 3}
+    - {fileID: 21300000, guid: d54468e44fff24604810d2ecf038e8ba, type: 3}

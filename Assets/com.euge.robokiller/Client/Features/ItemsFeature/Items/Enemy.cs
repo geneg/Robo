@@ -1,11 +1,13 @@
+using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+
 namespace com.euge.robokiller.Client.Features.ItemsFeature
 {
-	public class Robot : BaseItem
+	public class Enemy : BaseItem
 	{
 		private string _color;
 		private float _damageRate;
 
-		public Robot(string color, float damageRate)
+		public Enemy(string color, float damageRate)
 		{
 			_color = color;
 			_damageRate = damageRate;

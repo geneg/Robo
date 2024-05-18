@@ -12,14 +12,16 @@ namespace com.euge.robokiller.Client.Features.PathFeature
         
         [Space(10)]
         [Header("POI Coords and Types")]
-        [SerializeField] private POI[] _pointsOfInterest;
-
-        public POI[] PointsOfInterest => _pointsOfInterest;
+        [SerializeField] private ItemLayout[] _pointsOfInterest;
+        [SerializeField] private Transform _itemsParent;
+        
+        public ItemLayout[] PointsOfInterest => _pointsOfInterest;
         
         [SerializeField] private List<ThemeableElement> _themeableElements;
 
         public List<ThemeableElement> GetThemeableElements() => _themeableElements;
         public LineRenderer MovementPath => _movementPath;
+        public Transform ItemsParent => _itemsParent;
         
         private void Start()
         {
