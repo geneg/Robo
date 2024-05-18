@@ -29,15 +29,19 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
 			ItemLayout[] pathItemsLayout = pathFeature.GetPathItemsLayout();
 			Transform itemsParent = pathFeature.GetItemsParent();
+			List<Task<BaseItem>> tasks = new List<Task<BaseItem>>();
 			
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-			
+
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{
-				BaseItem item = await itemFactory.CreateItem(itemMeta);
-				_items.Add(item);
+				tasks.Add(itemFactory.CreateItem(itemMeta));
 			}
+
+			BaseItem[] items = await Task.WhenAll(tasks);
+
+			_items.AddRange(items);
 		}
 		
 		public List<ThemeableElement> GetThemeableElements()
