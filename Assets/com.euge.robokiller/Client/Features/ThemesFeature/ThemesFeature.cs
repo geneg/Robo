@@ -25,7 +25,7 @@ namespace com.euge.robokiller.Client.Features.ThemesFeature
 		public ThemeTemplate Theme => _theme;
 		private ThemeTemplate _theme;
 		
-		public ThemesFeature(AppConfiguration appConfig, ServiceResolver resolver) : base(resolver)
+		public ThemesFeature(AppConfiguration appConfig)
 		{
 			_themesConfigurationKey = appConfig.ThemesConfigurationKey;
 		}

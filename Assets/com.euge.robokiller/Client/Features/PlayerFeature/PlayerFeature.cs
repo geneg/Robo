@@ -19,7 +19,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private PlayerConfigugation _playerConfig;
 		private readonly Transform _parent;
 		
-		public PlayerFeature(AppConfiguration appConfig, Transform parent, ServiceResolver resolver) : base(resolver)
+		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
 			_playerConfigurationKey = appConfig.PlayerConfigurationKey;

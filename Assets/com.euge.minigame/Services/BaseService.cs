@@ -5,14 +5,18 @@ namespace com.euge.minigame.Services
 {
 	public abstract class BaseService
 	{
-
-		protected BaseService(ServiceResolver resolver)
+		private ServiceResolver _resolver;
+		protected BaseService()
 		{
-			GetServiceResolver = resolver;
 		}
 
+		public void InjectServiceResolver(ServiceResolver resolver)
+		{
+			_resolver = resolver;
+		}
+		
 		public abstract Task Initialize();
 		
-		public ServiceResolver GetServiceResolver { get; }
+		public ServiceResolver GetServiceResolver => _resolver;
 	}
 }

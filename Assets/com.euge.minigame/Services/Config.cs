@@ -20,7 +20,5 @@ namespace com.euge.minigame.Services
 		{
 			_appConfiguration = await Loaders.LoadAsset<AppConfiguration>(APP_CONFIG_ADDRESS);
 		}
-		
-		public Config(ServiceResolver resolver) : base(resolver) { }
 	}
 }

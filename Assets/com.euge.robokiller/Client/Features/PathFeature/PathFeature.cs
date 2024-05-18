@@ -16,10 +16,8 @@ namespace com.euge.robokiller.Client.Features.PathFeature
 		private int _currentLevelIndex;
 		private readonly Transform _parent;
 		private GameLevel _gameLevel;
-		private float _start;
-		private float _end;
 		
-		public PathFeature(AppConfiguration appConfig, Transform parent, ServiceResolver resolver) : base(resolver)
+		public PathFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_levelsConfigurationKey = appConfig.LevelsConfigurationKey;
 			_parent = parent;
@@ -34,22 +32,13 @@ namespace com.euge.robokiller.Client.Features.PathFeature
 			{
 				throw new System.Exception("PointsOfInterest is null or empty");
 			}
-			
-			_start = _gameLevel.PointsOfInterest[0].transform.position.y;
-			_end = _gameLevel.PointsOfInterest[^1].transform.position.y;
 		}
 		
 		public bool IsLastSection(int pathIndex)
 		{
 			return pathIndex >= _gameLevel.MovementPath.positionCount - 1;
 		}
-
-		public float GetPoiNormalizedPos(int progress)
-		{
-			float yPos = _gameLevel.PointsOfInterest[progress].transform.position.y;
-			return (yPos - _start) / (_end - _start);
-		}
-
+		
 		public Vector2 StartPoint()
 		{
 			return GetPathPoint(0);

@@ -6,8 +6,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 {
 	public class ItemsFeature : BaseService
 	{
-
-		public ItemsFeature(ServiceResolver resolver) : base(resolver) { }
 		public override Task Initialize()
 		{
 			return Task.CompletedTask;

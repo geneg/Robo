@@ -39,22 +39,22 @@ namespace com.euge.robokiller.Client
 			AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
 
 			#region "Client Features Creation"
-			_themesFeatureFeature = new ThemesFeature(appConfig, _clientServiceResolver);
+			_themesFeatureFeature = new ThemesFeature(appConfig);
 			_clientServiceResolver.RegisterService(_themesFeatureFeature);
 
-			_pathFeatureFeature = new PathFeature(appConfig, _visualBridge.GameContentParent, _clientServiceResolver);
+			_pathFeatureFeature = new PathFeature(appConfig, _visualBridge.GameContentParent);
 			_clientServiceResolver.RegisterService(_pathFeatureFeature);
 
-			_playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent, _clientServiceResolver);
+			_playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent);
 			_clientServiceResolver.RegisterService(_playerFeature);
 
-			_scrollFeature = new ScrollFeature(_visualBridge.ScrollRect, _clientServiceResolver);
+			_scrollFeature = new ScrollFeature(_visualBridge.ScrollRect);
 			_clientServiceResolver.RegisterService(_scrollFeature);
 
-			_movementFeature = new MovementFeature(_clientServiceResolver);
+			_movementFeature = new MovementFeature();
 			_clientServiceResolver.RegisterService(_movementFeature);
 
-			_itemsFeature = new ItemsFeature(_clientServiceResolver);
+			_itemsFeature = new ItemsFeature();
 			_clientServiceResolver.RegisterService(_itemsFeature);
 			#endregion
 

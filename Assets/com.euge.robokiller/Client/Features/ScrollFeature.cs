@@ -17,7 +17,7 @@ namespace com.euge.robokiller.Client.Features
 		private float _start;
 		private float _delta;
 
-		public ScrollFeature(ScrollRect scrollRect, ServiceResolver resolver) : base(resolver)
+		public ScrollFeature(ScrollRect scrollRect)
 		{
 			_scrollRect = scrollRect;
 		}

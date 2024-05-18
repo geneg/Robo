@@ -14,7 +14,7 @@ namespace com.euge.minigame
 		public virtual async Task Initialize()
 		{
 			//create common services for generic minigame (Config, Analytics, Apple/Google Login/IAP, Logger, etc...) 
-			_serviceResolver.RegisterService(new Config(_serviceResolver));
+			_serviceResolver.RegisterService(new Config());
 			
 			//initialize services in specific order
 			await _serviceResolver.InitializeServices();

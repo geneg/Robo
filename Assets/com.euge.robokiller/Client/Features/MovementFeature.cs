@@ -65,6 +65,5 @@ namespace com.euge.robokiller.Client.Features
 				});
 		}
 		
-		public MovementFeature(ServiceResolver resolver) : base(resolver) { }
 	}
 }
