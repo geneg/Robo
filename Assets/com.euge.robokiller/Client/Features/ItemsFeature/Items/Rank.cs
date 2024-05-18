@@ -1,14 +1,14 @@
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature
 {
 	public class Rank : BaseItem
 	{
-		private int _xpPoints;
-
-		public Rank(int xpPoints)
+		[SerializeField] private GameObject _rankIcon;
+		
+		public Rank()
 		{
-			_xpPoints = xpPoints;
 		}
 
 		public override void Interact()

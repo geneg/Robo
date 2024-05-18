@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
@@ -14,9 +15,26 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			_powerUp = powerUp;
 		}
 
+		private void Awake()
+		{
+			CloseChest();
+		}
+		
 		public override void Interact()
 		{
 			_powerUp.Apply();
+		}
+		
+		private void OpenChest()
+		{
+			_closedChest.SetActive(false);
+			_openChest.SetActive(true);
+		}
+		
+		private void CloseChest()
+		{
+			_closedChest.SetActive(true);
+			_openChest.SetActive(false);
 		}
 	}
 }

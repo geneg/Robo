@@ -1,21 +1,38 @@
-using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+using System;
+using UnityEngine;
 
-namespace com.euge.robokiller.Client.Features.ItemsFeature
+namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 {
 	public class Enemy : BaseItem
 	{
-		private string _color;
-		private float _damageRate;
+		[SerializeField] private GameObject _idle;
+		[SerializeField] private GameObject _attack;
 
-		public Enemy(string color, float damageRate)
+		public Enemy()
 		{
-			_color = color;
-			_damageRate = damageRate;
+		
 		}
 
+		private void Awake()
+		{
+			IdleState();
+		}
+		
 		public override void Interact()
 		{
 			// Apply damage every 1.5 seconds
+		}
+		
+		private void IdleState()
+		{
+			_idle.SetActive(true);
+			_attack.SetActive(false);
+		}
+
+		private void AttackState()
+		{
+			_idle.SetActive(false);
+			_attack.SetActive(true);
 		}
 	}
 }
