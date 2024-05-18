@@ -51,14 +51,14 @@ namespace com.euge.robokiller.Client.Features
 			float duration = distance / speed;
 			
 			_movementGameObject.transform.DOMove(nextPoint, duration)
-				.SetEase(_path.IsLastSection ? Ease.OutCubic : Ease.Linear)
+				.SetEase(_path.IsLastSection(_pathIndex) ? Ease.OutCubic : Ease.Linear)
 				.OnUpdate(() => {
 					Vector2 position = _movementGameObject.transform.position;
 					_player.MoveTo(position);
 					_scroll.MoveTo(position.y);
 				})
 				.OnComplete(() => {
-					if (_path.IsLastSection) return;
+					if (_path.IsLastSection(_pathIndex)) return;
 					
 					_pathIndex++;
 					Move();

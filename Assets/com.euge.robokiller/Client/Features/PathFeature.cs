@@ -18,8 +18,6 @@ namespace com.euge.robokiller.Client.Features
 		private GameLevel _gameLevel;
 		private float _start;
 		private float _end;
-		private int _pathIndex;
-		public bool IsLastSection => _pathIndex >= _gameLevel.MovementPath.positionCount - 1;
 		
 		public PathFeature(AppConfiguration appConfig, Transform parent, ServiceResolver resolver) : base(resolver)
 		{
@@ -41,6 +39,11 @@ namespace com.euge.robokiller.Client.Features
 			_end = _gameLevel.PointsOfInterest[^1].transform.position.y;
 		}
 		
+		public bool IsLastSection(int pathIndex)
+		{
+			return pathIndex >= _gameLevel.MovementPath.positionCount - 1;
+		}
+
 		public float GetPoiNormalizedPos(int progress)
 		{
 			float yPos = _gameLevel.PointsOfInterest[progress].transform.position.y;
