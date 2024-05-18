@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 
 		public RectTransform PlayerTransform => _playerTransform;
 		public List<ThemeableElement> GetThemeableElements() => _themeableElements;
+		public event Action<BaseItem> OnItemInteracted;
 		
 		public void SetIdlePose()
 		{
@@ -26,6 +29,14 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		{
 			_regularPose.SetActive(false);
 			_attackPose.SetActive(true);
+		}
+		
+		private void OnTriggerEnter2D(Collider2D other)
+		{
+			BaseItem item = other.GetComponent<BaseItem>();
+			if (item == null) return;
+			
+			OnItemInteracted?.Invoke(item);
 		}
 	}
 }

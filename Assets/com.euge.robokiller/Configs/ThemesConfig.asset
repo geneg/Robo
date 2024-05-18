@@ -17,4 +17,4 @@ MonoBehaviour:
     addressableKey: DefaultTheme
   - themeName: Winter Event
     addressableKey: WinterTheme
-  CurrentThemeIndex: 1
+  CurrentThemeIndex: 0

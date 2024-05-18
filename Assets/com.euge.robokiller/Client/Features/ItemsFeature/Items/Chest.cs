@@ -9,12 +9,12 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		[SerializeField] private GameObject _openChest;
 		
 		private IPowerUp _powerUp;
-
-		public Chest(IPowerUp powerUp)
+		
+		public void SetPowerUp(IPowerUp powerUp)
 		{
 			_powerUp = powerUp;
 		}
-
+		
 		private void Awake()
 		{
 			CloseChest();
@@ -22,6 +22,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		
 		public override void Interact()
 		{
+			OpenChest();
+			//get powerup from powerups manager
+			
 			_powerUp.Apply();
 		}
 		

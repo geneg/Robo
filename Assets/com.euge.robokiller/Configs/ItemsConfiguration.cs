@@ -8,5 +8,7 @@ namespace com.euge.robokiller.Configs
 		public string ChestKey;
 		public string EnemyKey;
 		public string RankKey;
+		
+		
 	}
 }

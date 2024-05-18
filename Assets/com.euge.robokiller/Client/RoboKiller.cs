@@ -7,6 +7,7 @@ using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features;
 using com.euge.robokiller.Client.Features.ItemsFeature;
+using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.PathFeature;
 using com.euge.robokiller.Client.Features.PlayerFeature;
 using com.euge.robokiller.Client.Features.ThemesFeature;
@@ -69,9 +70,16 @@ namespace com.euge.robokiller.Client
 
 		private void BeginGame()
 		{
+			_playerFeature.OnItemInteracted += OnItemInteracted;
+			
 			_movementFeature.BeginMove();
 			_movementFeature.Move();
-			
+		}
+		
+		private void OnItemInteracted(BaseItem item)
+		{
+			item.Interact();
+			_movementFeature.PauseMove();
 		}
 
 

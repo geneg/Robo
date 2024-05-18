@@ -14,6 +14,7 @@ namespace com.euge.robokiller.Client.Features
 		private PathFeature.PathFeature _path;
 		private ScrollFeature _scroll;
 		private GameObject _movementGameObject;
+		private bool _isPaused;
 
 		public override Task Initialize()
 		{
@@ -29,7 +30,7 @@ namespace com.euge.robokiller.Client.Features
 		
 		private void OnBeginDrag()
 		{
-			_movementGameObject.transform.DOPause();
+			PauseMove();
 		}
 
 		public void BeginMove()
@@ -47,7 +48,7 @@ namespace com.euge.robokiller.Client.Features
 			Vector2 nextPoint = _path.GetPathPoint(_pathIndex);
 			
 			float distance = Vector2.Distance(currentPoint, nextPoint);
-			float speed = 300f; // Define your speed here
+			float speed = _player.GetSpeed();
 			float duration = distance / speed;
 			
 			_movementGameObject.transform.DOMove(nextPoint, duration)
@@ -64,6 +65,13 @@ namespace com.euge.robokiller.Client.Features
 					Move();
 				});
 		}
-		
+
+		public void PauseMove()
+		{
+			if (_isPaused) return;
+			
+			_isPaused = true;
+			_movementGameObject.transform.DOPause();
+		}
 	}
 }
