@@ -35,7 +35,16 @@ namespace com.euge.minigame.Utils
 				if (instantiateHandle.Status == AsyncOperationStatus.Succeeded)
 				{
 					GameObject instantiatedPrefab = instantiateHandle.Result;
-					return instantiatedPrefab as T;
+					
+					T result = instantiatedPrefab.GetComponent<T>();
+					if (result != null)
+					{
+						return result;
+					}
+					else
+					{
+						throw new System.Exception("The instantiated prefab does not contain a component of type " + typeof(T).Name);
+					}
 				}
 				else
 				{

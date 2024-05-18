@@ -1,5 +1,6 @@
 
 using System.Threading.Tasks;
+using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Utils;
 using UnityEngine.AddressableAssets;
@@ -15,9 +16,11 @@ namespace com.euge.minigame.Services
 
 		public AppConfiguration AppConfig => _appConfiguration;
 
-		public async Task Initialize()
+		public override async Task Initialize()
 		{
 			_appConfiguration = await Loaders.LoadAsset<AppConfiguration>(APP_CONFIG_ADDRESS);
 		}
+		
+		public Config(ServiceResolver resolver) : base(resolver) { }
 	}
 }

@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildVersion: 100001
   LevelsConfigurationKey: LevelsConfig
+  ThemesConfigurationKey: ThemesConfig
+  PlayerConfigurationKey: PlayerConfig

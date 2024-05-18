@@ -1,58 +1,73 @@
 using System;
 using System.Threading.Tasks;
 using com.euge.minigame;
+using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features;
+using DG.Tweening;
+using UnityEngine;
 
 
 namespace com.euge.robokiller.Client
 {
-    public class RoboKiller : Minigame
-    {
-        private Levels _levelsFeature;
-        private readonly VisualBridge _visualBridge;
-        
-        public RoboKiller(VisualBridge visualBridge)
-        {
-            _visualBridge = visualBridge;
-        }
+	public class RoboKiller : Minigame
+	{
+		private readonly ServiceResolver _clientServiceResolver = new ServiceResolver();
+		private readonly VisualBridge _visualBridge;
+		private ThemesFeature _themesFeatureFeature;
+		private PathFeature _pathFeatureFeature;
+		private PlayerFeature _playerFeature;
+		private ScrollFeature _scrollFeature;
+		private MovementFeature _movementFeature;
 
-        public override async Task Initialize() 
-        {
-            await base.Initialize();
-            
-            
-            AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
-            
-            _levelsFeature = new Levels(appConfig, _visualBridge.LevelParent);
-            
-            InitializeFeatures();
-            
-        }
+		public RoboKiller(VisualBridge visualBridge)
+		{
+			_visualBridge = visualBridge;
+		}
 
-        private async void InitializeFeatures()
-        {
-            await _levelsFeature.Initialize();
-        }
-        
-        // Start is called before the first frame update
-        void Start()
-        {
-            //levels
-            //configuration loader
-        //load level
-        //init level
-        //init player
-        //state machine
-        
-        }
+		public override async Task Initialize()
+		{
+			await base.Initialize();
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-    }
+			AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
+
+			_themesFeatureFeature = new ThemesFeature(appConfig, _clientServiceResolver);
+			_clientServiceResolver.RegisterService(_themesFeatureFeature);
+
+			_pathFeatureFeature = new PathFeature(appConfig, _visualBridge.GameContentParent, _clientServiceResolver);
+			_clientServiceResolver.RegisterService(_pathFeatureFeature);
+
+			_playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent, _clientServiceResolver);
+			_clientServiceResolver.RegisterService(_playerFeature);
+
+			_scrollFeature = new ScrollFeature(_visualBridge.ScrollRect, _clientServiceResolver);
+			_clientServiceResolver.RegisterService(_scrollFeature);
+
+			_movementFeature = new MovementFeature(_clientServiceResolver);
+			_clientServiceResolver.RegisterService(_movementFeature);
+			
+			await _clientServiceResolver.InitializeServices();
+
+			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
+			_themesFeatureFeature.ApplyTheme(_playerFeature);
+
+			BeginGame();
+		}
+
+		private void BeginGame()
+		{
+			_movementFeature.BeginMove();
+			_movementFeature.Move();
+			
+			// float pos = _pathFeatureFeature.GetPoiNormalizedPos(progress);
+			// _scrollFeatureFeature.MoveInstant(pos);
+
+			//_pathFeatureFeature.MovePlayerToStartPosition(_playerFeature.PlayerTransform);
+			//_pathFeatureFeature.BeginPlayerMove(_playerFeature.PlayerTransform);
+		}
+
+
+	}
 }

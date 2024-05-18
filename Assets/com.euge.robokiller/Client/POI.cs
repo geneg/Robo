@@ -6,7 +6,7 @@ namespace com.euge.robokiller.Client
 	[RequireComponent(typeof(Image))]
 	public class POI : MonoBehaviour
 	{
-		[SerializeField] private POIType _type;
+		[SerializeField] private PoiType _type;
 		
 		private Image _image;
 		
@@ -30,14 +30,20 @@ namespace com.euge.robokiller.Client
 
 			switch (_type)
 			{
-				case POIType.Enemy:
+				case PoiType.Enemy:
 					_image.color = Color.red;
 					break;
-				case POIType.Chest:
+				case PoiType.Chest:
 					_image.color = Color.yellow;
 					break;
-				case POIType.Rank:
+				case PoiType.Rank:
 					_image.color = Color.green;
+					break;
+				case PoiType.StartPoint:
+					_image.color = Color.blue;
+					break;
+				case PoiType.FinishPoint:
+					_image.color = Color.magenta;
 					break;
 			}
 		}

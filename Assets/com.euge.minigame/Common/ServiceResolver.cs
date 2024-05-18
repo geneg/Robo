@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using com.euge.minigame.Services;
 
 namespace com.euge.minigame.Common
@@ -22,6 +23,14 @@ namespace com.euge.minigame.Common
 			else
 			{
 				throw new InvalidOperationException("Service of type " + typeof(T) + " not found.");
+			}
+		}
+
+		public async Task InitializeServices()
+		{
+			foreach (BaseService service in _services.Values)
+			{
+				await service.Initialize();
 			}
 		}
 	}

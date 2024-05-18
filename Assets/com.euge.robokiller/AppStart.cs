@@ -18,9 +18,9 @@ namespace com.euge.robokiller
 			_minigame = new RoboKiller(_visualBridge);
 		}
 		
-		private void Start()
+		private async void Start()
 		{
-			_minigame.Initialize();
+			await _minigame.Initialize();
 		}
 		
 		private void OnDestroy()
