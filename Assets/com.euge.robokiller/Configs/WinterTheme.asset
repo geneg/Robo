@@ -15,8 +15,8 @@ MonoBehaviour:
   background: {fileID: 21300000, guid: 29cd41ae8c0434604bffb27a85dd34cf, type: 3}
   path: {fileID: 21300000, guid: 5944db3f9d8f84c26ba464e68397f03d, type: 3}
   player:
-  - {fileID: 21300000, guid: f0c5606fa4fa94507ad12644796cdc88, type: 3}
   - {fileID: 21300000, guid: 3d9e85dad56444d66800b26b9ada62e4, type: 3}
+  - {fileID: 21300000, guid: f0c5606fa4fa94507ad12644796cdc88, type: 3}
   poi:
   - type: 1
     sprites:

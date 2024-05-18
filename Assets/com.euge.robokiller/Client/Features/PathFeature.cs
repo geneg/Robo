@@ -47,6 +47,16 @@ namespace com.euge.robokiller.Client.Features
 			return (yPos - _start) / (_end - _start);
 		}
 
+		public Vector2 StartPoint()
+		{
+			return GetPathPoint(0);
+		}
+		
+		public Vector2 EndPoint()
+		{
+			return GetPathPoint(_gameLevel.MovementPath.positionCount - 1);
+		}
+
 		public List<ThemeableElement> GetThemeableElements()
 		{
 			return _gameLevel.GetThemeableElements();	

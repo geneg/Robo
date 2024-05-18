@@ -19,6 +19,8 @@ namespace com.euge.robokiller.Client
 		private ThemesFeature _themesFeatureFeature;
 		private PathFeature _pathFeatureFeature;
 		private PlayerFeature _playerFeature;
+		private ScrollFeature _scrollFeature;
+		private MovementFeature _movementFeature;
 
 		public RoboKiller(VisualBridge visualBridge)
 		{
@@ -40,8 +42,12 @@ namespace com.euge.robokiller.Client
 			_playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent, _clientServiceResolver);
 			_clientServiceResolver.RegisterService(_playerFeature);
 
-			_clientServiceResolver.RegisterService(new ScrollFeature(_visualBridge.ScrollRect, _clientServiceResolver));
+			_scrollFeature = new ScrollFeature(_visualBridge.ScrollRect, _clientServiceResolver);
+			_clientServiceResolver.RegisterService(_scrollFeature);
 
+			_movementFeature = new MovementFeature(_clientServiceResolver);
+			_clientServiceResolver.RegisterService(_movementFeature);
+			
 			await _clientServiceResolver.InitializeServices();
 
 			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
@@ -52,7 +58,9 @@ namespace com.euge.robokiller.Client
 
 		private void BeginGame()
 		{
-			_playerFeature.BeginPlayerMove();
+			_movementFeature.BeginMove();
+			_movementFeature.Move();
+			
 			// float pos = _pathFeatureFeature.GetPoiNormalizedPos(progress);
 			// _scrollFeatureFeature.MoveInstant(pos);
 
