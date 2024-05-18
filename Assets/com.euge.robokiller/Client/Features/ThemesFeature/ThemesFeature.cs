@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using com.euge.minigame.Common;
@@ -10,7 +9,7 @@ using com.euge.robokiller.Configs;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace com.euge.robokiller.Client.Features
+namespace com.euge.robokiller.Client.Features.ThemesFeature
 {
 	[Serializable]
 	public class ThemeableElement

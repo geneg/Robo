@@ -1,10 +1,8 @@
-
-using System;
 using System.Collections.Generic;
+using com.euge.robokiller.Client.Features.ThemesFeature;
 using UnityEngine;
 
-
-namespace com.euge.robokiller.Client.Features
+namespace com.euge.robokiller.Client.Features.PathFeature
 {
 
     public class GameLevel : MonoBehaviour, IThemeable

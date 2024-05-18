@@ -10,15 +10,15 @@ namespace com.euge.robokiller.Client.Features
 	public class MovementFeature : BaseService
 	{
 		private int _pathIndex;
-		private PlayerFeature _player;
-		private PathFeature _path;
+		private PlayerFeature.PlayerFeature _player;
+		private PathFeature.PathFeature _path;
 		private ScrollFeature _scroll;
 		private GameObject _movementGameObject;
 
 		public override Task Initialize()
 		{
-			_path = GetServiceResolver.GetService<PathFeature>();
-			_player = GetServiceResolver.GetService<PlayerFeature>();
+			_path = GetServiceResolver.GetService<PathFeature.PathFeature>();
+			_player = GetServiceResolver.GetService<PlayerFeature.PlayerFeature>();
 			_scroll = GetServiceResolver.GetService<ScrollFeature>();
 			_movementGameObject = new GameObject("MovementGameObject");
 			

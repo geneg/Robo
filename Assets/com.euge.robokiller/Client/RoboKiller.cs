@@ -6,6 +6,10 @@ using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features;
+using com.euge.robokiller.Client.Features.ItemsFeature;
+using com.euge.robokiller.Client.Features.PathFeature;
+using com.euge.robokiller.Client.Features.PlayerFeature;
+using com.euge.robokiller.Client.Features.ThemesFeature;
 using DG.Tweening;
 using UnityEngine;
 
@@ -21,6 +25,7 @@ namespace com.euge.robokiller.Client
 		private PlayerFeature _playerFeature;
 		private ScrollFeature _scrollFeature;
 		private MovementFeature _movementFeature;
+		private ItemsFeature _itemsFeature;
 
 		public RoboKiller(VisualBridge visualBridge)
 		{
@@ -33,6 +38,7 @@ namespace com.euge.robokiller.Client
 
 			AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
 
+			#region "Client Features Creation"
 			_themesFeatureFeature = new ThemesFeature(appConfig, _clientServiceResolver);
 			_clientServiceResolver.RegisterService(_themesFeatureFeature);
 
@@ -47,7 +53,11 @@ namespace com.euge.robokiller.Client
 
 			_movementFeature = new MovementFeature(_clientServiceResolver);
 			_clientServiceResolver.RegisterService(_movementFeature);
-			
+
+			_itemsFeature = new ItemsFeature(_clientServiceResolver);
+			_clientServiceResolver.RegisterService(_itemsFeature);
+			#endregion
+
 			await _clientServiceResolver.InitializeServices();
 
 			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
@@ -61,11 +71,6 @@ namespace com.euge.robokiller.Client
 			_movementFeature.BeginMove();
 			_movementFeature.Move();
 			
-			// float pos = _pathFeatureFeature.GetPoiNormalizedPos(progress);
-			// _scrollFeatureFeature.MoveInstant(pos);
-
-			//_pathFeatureFeature.MovePlayerToStartPosition(_playerFeature.PlayerTransform);
-			//_pathFeatureFeature.BeginPlayerMove(_playerFeature.PlayerTransform);
 		}
 
 

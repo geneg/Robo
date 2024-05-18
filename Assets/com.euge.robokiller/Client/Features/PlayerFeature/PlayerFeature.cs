@@ -4,10 +4,11 @@ using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
+using com.euge.robokiller.Client.Features.ThemesFeature;
 using com.euge.robokiller.Configs;
 using UnityEngine;
 
-namespace com.euge.robokiller.Client.Features
+namespace com.euge.robokiller.Client.Features.PlayerFeature
 {
 	public class PlayerFeature : BaseService, IThemeable
 	{

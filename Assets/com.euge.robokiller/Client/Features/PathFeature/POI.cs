@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace com.euge.robokiller.Client
+namespace com.euge.robokiller.Client.Features.PathFeature
 {
 	[RequireComponent(typeof(Image))]
 	public class POI : MonoBehaviour
