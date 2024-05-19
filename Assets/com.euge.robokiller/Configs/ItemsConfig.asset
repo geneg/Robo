@@ -18,7 +18,7 @@ MonoBehaviour:
   itemsData:
   - itemType: 0
     contantPowerUp: 1
-    additionalDataJson: '{   "HitPointsFrom": 2,   "HitPointsTo": 4 }'
+    additionalDataJson: '{   "HitPointsFrom": 2,   "HitPointsTo": 12 }'
   - itemType: 1
     contantPowerUp: 0
     additionalDataJson: 

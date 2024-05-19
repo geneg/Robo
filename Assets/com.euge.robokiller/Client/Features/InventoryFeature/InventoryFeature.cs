@@ -36,8 +36,7 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 
 		public void UpdateInventory(PowerUpEffect effect)
 		{
-			_inventoryData.Rank += effect.Rank;
-			
+			//health
 			int oldValue = _inventoryData.Health;
 			_inventoryData.Health += effect.HealthDelta;
 			
@@ -46,6 +45,7 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 				_inventoryPanel.SetHealth(_inventoryData.Health);
 			}
 			
+			//rank
 			oldValue = _inventoryData.Rank;
 			_inventoryData.Rank += effect.Rank;
 			
