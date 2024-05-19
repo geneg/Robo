@@ -10,5 +10,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		
 		void Apply();
 		Sprite PowerUpSprite { get; }
+		void Stop();
 	}
 }

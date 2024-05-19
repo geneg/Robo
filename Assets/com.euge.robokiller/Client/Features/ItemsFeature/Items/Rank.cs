@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
@@ -6,13 +7,15 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 	{
 		[SerializeField] private GameObject _rankIcon;
 		
-		public Rank()
-		{
-		}
-
 		public override void Interact()
 		{
-			// Give XP points
+			transform.DOPunchScale(Vector3.one * 1.5f, 0.8f, 0).SetEase(Ease.OutBounce).OnComplete(() => {
+				_powerUp.Stop();
+				gameObject.SetActive(false);
+				InvokeOnItemExhaust();
+			});
+			
+			_powerUp.Apply();
 		}
 	}
 }

@@ -40,7 +40,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 				.SetLoops(loops:-1);
 		}
 
-		public void StopEffect()
+		public void Stop()
 		{
 			if (_damageSequence != null)
 			{

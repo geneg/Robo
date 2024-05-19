@@ -10,6 +10,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 	{
 		[SerializeField] private GameObject _idle;
 		[SerializeField] private GameObject _attack;
+		[SerializeField] private HpBar _hpBar;
 		private bool _isAttacking;
 		private EnemyData _additionalData;
 		private int _hitPoints;
@@ -18,13 +19,16 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		private void Awake()
 		{
 			IdleState();
+			_hpBar.gameObject.SetActive(false);
 		}
 		
 		public override void Interact()
 		{
 			//deal random hit points
 			_hitPoints = UnityEngine.Random.Range(_additionalData.HitPointsFrom, _additionalData.HitPointsTo + 1);
-			
+			_hpBar.gameObject.SetActive(true);
+			_hpBar.SetTotal(_hitPoints);
+			_hpBar.SetValue(_hitPoints);
 			_isAttacking = true;
 			_powerUp.OnAnimate += AttackAnimation;
 			_powerUp.Apply();
@@ -59,10 +63,14 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		public override void Hit(int rank)
 		{
 			_hitPoints -= rank;
+			_hpBar.SetValue(_hitPoints);
+			
 			if (_hitPoints > 0) return;
 			
+			_powerUp.Stop();
 			_powerUp.OnAnimate -= AttackAnimation;
 			_currentTween.Kill();
+			_hpBar.gameObject.SetActive(false);
 			gameObject.SetActive(false);
 			InvokeOnItemExhaust();
 		}
