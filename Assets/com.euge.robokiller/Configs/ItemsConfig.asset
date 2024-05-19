@@ -18,29 +18,32 @@ MonoBehaviour:
   itemsData:
   - itemType: 0
     contantPowerUp: 1
+    additionalDataJson: '{   "HitPointsFrom": 2,   "HitPointsTo": 12 }'
   - itemType: 1
     contantPowerUp: 0
+    additionalDataJson: 
   - itemType: 2
     contantPowerUp: 1
+    additionalDataJson: 
   powerUps:
   - powerUpType: 0
     relatedItemType: 1
-    powerUpSprite: {fileID: 0}
+    powerUpSprite: {fileID: 21300000, guid: ee851b1a72f0c425c813d3454c472808, type: 3}
     EffectFrequency: 0
     EffectValue: 1
   - powerUpType: 1
     relatedItemType: 1
-    powerUpSprite: {fileID: 0}
+    powerUpSprite: {fileID: 21300000, guid: ef393ee64a6d044b7b427f97944c128a, type: 3}
     EffectFrequency: 1
     EffectValue: 200
   - powerUpType: 2
     relatedItemType: 1
-    powerUpSprite: {fileID: 0}
+    powerUpSprite: {fileID: 21300000, guid: 7f335329fd8124840a28b76fffa5ce36, type: 3}
     EffectFrequency: 0
     EffectValue: 3
   - powerUpType: 3
     relatedItemType: 1
-    powerUpSprite: {fileID: 0}
+    powerUpSprite: {fileID: 21300000, guid: 26e2f6f8c8bbd4cc7bc39f7c064a0d19, type: 3}
     EffectFrequency: 0
     EffectValue: 3
   - powerUpType: 4

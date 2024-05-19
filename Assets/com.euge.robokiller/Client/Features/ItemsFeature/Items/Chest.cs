@@ -12,32 +12,45 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		[SerializeField] private GameObject _closedChest;
 		[SerializeField] private GameObject _openChest;
 		
-		
-		
 		private void Awake()
 		{
 			CloseChest();
 		}
 		
-		public override void Interact()
+		public override async void Interact()
 		{
+			await InvokeRequestPowerUp();
+			
 			OpenChest();
+			_item.sprite = _powerUp.PowerUpSprite;
+			
+			_item.gameObject.SetActive(true);
+			_item.transform.localScale = Vector3.zero;
+			
+			_item.transform.DOPunchScale(Vector3.one * 3, 1f, 0, 0).SetEase(Ease.OutBounce).OnComplete(() => {
+				_powerUp.Stop();
+				CloseChest();
+				
+				gameObject.SetActive(false);
+				InvokeOnItemExhaust();
+				
+			});
+			
+			_powerUp.Apply();
+			
 		}
 		
 		private void OpenChest()
 		{
 			_closedChest.SetActive(false);
 			_openChest.SetActive(true);
-			//_item.gameObject.SetActive(true);
-			//_item.transform.localScale = Vector3.zero;
-			//_item.transform.DOPunchScale(Vector3.one, 0.5f);
 		}
 		
 		private void CloseChest()
 		{
 			_closedChest.SetActive(true);
-			//_item.gameObject.SetActive(false);
-			//_item.transform.localScale = Vector3.zero;
+			_item.gameObject.SetActive(false);
+			_item.transform.localScale = Vector3.zero;
 			_openChest.SetActive(false);
 		}
 	}

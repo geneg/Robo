@@ -52,6 +52,11 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private async Task<BaseItem> CreateEnemy(ItemLayout itemLayout)
 		{
 			Enemy item = await Loaders.Instantiate<Enemy>(_itemsConfig.EnemyKey, _parent);
+
+			ItemData data = _itemsConfig.GetItemData(itemLayout.Type);
+			item.SetAdditionalData(data.additionalDataJson);
+			
+			
 			item.transform.position = itemLayout.Position;
 			return item;
 		}
@@ -62,8 +67,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			item.transform.position = itemLayout.Position;
 			return item;
 		}
-		
-		
-		
 	}
+	
+	
 }

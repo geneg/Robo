@@ -17,36 +17,57 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private readonly string _itemsConfigurationKey;
 		private ItemsConfiguration _itemsConfig;
 		private List<BaseItem> _items;
-		
+		private InventoryFeature.InventoryFeature _inventoryFeature;
+		private MovementFeature _movementFeature;
+
 		public ItemsFeature(AppConfiguration appConfig)
 		{
 			_items = new List<BaseItem>();
 			_itemsConfigurationKey = appConfig.ItemsConfigurationKey;
 		}
-		
+
 		public override async Task Initialize()
 		{
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
-			InventoryFeature.InventoryFeature inventoryFeature = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
-			
+			_inventoryFeature = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
+			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
+
 			ItemLayout[] pathItemsLayout = pathFeature.GetPathItemsLayout();
 			Transform itemsParent = pathFeature.GetItemsParent();
 			List<Task<BaseItem>> tasks = new List<Task<BaseItem>>();
-			
+
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, inventoryFeature, _itemsConfig);
-			
+			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _inventoryFeature, _itemsConfig);
+
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{
 				BaseItem item = await itemFactory.Create(itemMeta);
+				item.OnItemExhaust += OnItemExhaust;
 				
 				if (powerUpFactory.IsConstantPowerUp(itemMeta.Type))
 				{
 					IPowerUp powerUp = powerUpFactory.Create(itemMeta.Type);
-					item.InjectPowerUp(powerUp); 
+					item.InjectPowerUp(powerUp);
+					item.OnClickItem += OnItemClicked;
 				}
-				
+				else
+				{
+					item.RequestPowerUp += async () => {
+						List<PowerUpType> exclude = new List<PowerUpType>();
+						var read = _inventoryFeature.ReadInventory();
+
+						if (read.TotalHealth == read.Health)
+						{
+							exclude.Add(PowerUpType.health);
+						}
+
+						IPowerUp powerUp = powerUpFactory.CreateDynamically(itemMeta.Type, exclude);
+						item.InjectPowerUp(powerUp);
+						
+					};
+				}
+
 				tasks.Add(Task.FromResult(item));
 			}
 
@@ -54,7 +75,18 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 			_items.AddRange(items);
 		}
-		
+
+		private void OnItemExhaust()
+		{
+			_movementFeature.ResumeMove();
+		}
+
+		private void OnItemClicked(BaseItem item)
+		{
+			//do player attack
+			item.Hit(_inventoryFeature.ReadInventory().Rank);
+		}
+
 		public List<ThemeableElement> GetThemeableElements()
 		{
 			List<ThemeableElement> themeableElements = new List<ThemeableElement>();

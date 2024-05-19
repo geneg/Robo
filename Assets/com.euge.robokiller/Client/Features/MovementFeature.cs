@@ -73,5 +73,13 @@ namespace com.euge.robokiller.Client.Features
 			_isPaused = true;
 			_movementGameObject.transform.DOPause();
 		}
+		
+		public void ResumeMove()
+		{
+			if (!_isPaused) return;
+			
+			_isPaused = false;
+			_movementGameObject.transform.DOPlay();
+		}
 	}
 }

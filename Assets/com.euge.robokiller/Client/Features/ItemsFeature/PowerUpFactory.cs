@@ -23,6 +23,41 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 			_inventory = inventory;
 		}
 		
+		public IPowerUp CreateDynamically(ItemType itemType, List<PowerUpType> exclude)
+		{
+			List<PowerUpData> dataList = new List<PowerUpData>();
+			PowerUpData data = null;
+			
+			foreach (PowerUpData powerUpData in _itemsConfig.powerUps) //not many powerups, so it's ok to iterate
+			{
+				if(exclude.Contains(powerUpData.powerUpType))
+				{
+					continue;
+				}
+				
+				if(powerUpData.relatedItemType == itemType)
+				{
+					dataList.Add(powerUpData);
+				}
+			}
+			
+			data = dataList[UnityEngine.Random.Range(0, dataList.Count)];
+			
+			switch (data.powerUpType)
+			{
+				case PowerUpType.bomb:
+					return new Bomb(data, _inventory);
+				case PowerUpType.health:
+					return new HealthUp(data, _inventory);
+				case PowerUpType.shield:
+					return new Shield(data, _inventory);
+				case PowerUpType.sword:
+					return new Sword(data, _inventory);
+				default:
+					throw new Exception("Unknown powerUp type");
+			}
+		}
+		
 		public IPowerUp Create(ItemType itemType)
 		{
 			List<PowerUpData> dataList = new List<PowerUpData>();
@@ -42,7 +77,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 			switch (data.powerUpType)
 			{
 				case PowerUpType.rankUp:
-					return new RankUp(data);
+					return new RankUp(data, _inventory);
 				case PowerUpType.damage:
 					return new DamagePowerUp(data, _inventory);
 				default:
