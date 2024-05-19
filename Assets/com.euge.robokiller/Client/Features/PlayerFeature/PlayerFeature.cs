@@ -21,6 +21,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private Player _player;
 		private PlayerConfigugation _playerConfig;
 		private readonly Transform _parent;
+		private BaseItem _interactibleItem;
 
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
@@ -36,9 +37,16 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		
 		public void BeginPlayerMove(Vector2 position)
 		{
-			_player.OnItemInteracted += OnItemInteracted;
+			_player.OnItemInteracted += OnItemInteractedInner;
+			
 			_player.SetIdlePose();
 			_player.PlayerTransform.anchoredPosition = position;
+		}
+		
+		private void OnItemInteractedInner(BaseItem item)
+		{
+			OnItemInteracted?.Invoke(item); // Forwarding the event
+			_interactibleItem = item;
 		}
 
 		public void MoveTo(Vector2 position)

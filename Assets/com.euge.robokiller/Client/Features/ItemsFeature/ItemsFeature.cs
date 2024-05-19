@@ -17,7 +17,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private readonly string _itemsConfigurationKey;
 		private ItemsConfiguration _itemsConfig;
 		private List<BaseItem> _items;
-		
+		private InventoryFeature.InventoryFeature _inventoryFeature;
+		private MovementFeature _movementFeature;
+
 		public ItemsFeature(AppConfiguration appConfig)
 		{
 			_items = new List<BaseItem>();
@@ -27,7 +29,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		public override async Task Initialize()
 		{
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
-			InventoryFeature.InventoryFeature inventoryFeature = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
+			_inventoryFeature = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
+			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
 			
 			ItemLayout[] pathItemsLayout = pathFeature.GetPathItemsLayout();
 			Transform itemsParent = pathFeature.GetItemsParent();
@@ -35,7 +38,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, inventoryFeature, _itemsConfig);
+			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _inventoryFeature, _itemsConfig);
 			
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{
@@ -45,6 +48,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 				{
 					IPowerUp powerUp = powerUpFactory.Create(itemMeta.Type);
 					item.InjectPowerUp(powerUp); 
+					item.OnClickItem += OnItemClicked;
+					item.OnItemExhaust += OnItemExhaust;
 				}
 				
 				tasks.Add(Task.FromResult(item));
@@ -55,6 +60,17 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			_items.AddRange(items);
 		}
 		
+		private void OnItemExhaust()
+		{
+			_movementFeature.ResumeMove();
+		}
+
+		private void OnItemClicked(BaseItem item)
+		{
+			//do player attack
+			item.Hit(_inventoryFeature.ReadInventory().Rank);
+		}
+
 		public List<ThemeableElement> GetThemeableElements()
 		{
 			List<ThemeableElement> themeableElements = new List<ThemeableElement>();

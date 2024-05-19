@@ -18,10 +18,13 @@ MonoBehaviour:
   itemsData:
   - itemType: 0
     contantPowerUp: 1
+    additionalDataJson: '{   "HitPointsFrom": 2,   "HitPointsTo": 12 }'
   - itemType: 1
     contantPowerUp: 0
+    additionalDataJson: 
   - itemType: 2
     contantPowerUp: 1
+    additionalDataJson: 
   powerUps:
   - powerUpType: 0
     relatedItemType: 1

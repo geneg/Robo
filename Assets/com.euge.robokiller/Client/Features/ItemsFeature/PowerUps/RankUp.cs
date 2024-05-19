@@ -5,6 +5,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class RankUp : IPowerUp
 	{
+		public event PowerUpUpdateHandler OnAnimate;
+
 		public RankUp(PowerUpData data)
 		{
 			PowerUpSprite = data.powerUpSprite;

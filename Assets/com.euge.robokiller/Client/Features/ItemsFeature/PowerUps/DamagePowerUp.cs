@@ -13,6 +13,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		private IInventory _inventory;
 		private Sequence _damageSequence;
 		private readonly float _attackStrength;
+		
+		public event PowerUpUpdateHandler OnAnimate;
 
 		public DamagePowerUp(PowerUpData data, IInventory inventory)
 		{
@@ -31,7 +33,10 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 
 			_damageSequence = DOTween.Sequence()
 				.AppendInterval(_attackFrequency)
-				.AppendCallback(() => _inventory.UpdateInventory(effect))
+				.AppendCallback(() => {
+					OnAnimate?.Invoke();
+					_inventory.UpdateInventory(effect);
+				})
 				.SetLoops(loops:-1);
 		}
 

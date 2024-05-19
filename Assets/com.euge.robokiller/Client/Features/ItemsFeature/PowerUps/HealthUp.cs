@@ -4,6 +4,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class HealthUp : IPowerUp
 	{
+		public event PowerUpUpdateHandler OnAnimate;
+
 		public HealthUp()
 		{
 			//_player = player;
