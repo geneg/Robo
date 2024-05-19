@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e95b8a0e2b548cbac7f84e91082bc4f, type: 3}
+  m_Name: ItemsConfig
+  m_EditorClassIdentifier: 
+  ChestKey: Chest
+  EnemyKey: Enemy
+  RankKey: Rank
+  itemsData:
+  - itemType: 0
+    contantPowerUp: 1
+  - itemType: 1
+    contantPowerUp: 0
+  - itemType: 2
+    contantPowerUp: 1
+  powerUps:
+  - powerUpType: 0
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+    EffectValue: 1
+  - powerUpType: 1
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 1
+    EffectValue: 200
+  - powerUpType: 2
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+    EffectValue: 3
+  - powerUpType: 3
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+    EffectValue: 3
+  - powerUpType: 4
+    relatedItemType: 2
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+    EffectValue: 1
+  - powerUpType: 5
+    relatedItemType: 0
+    powerUpSprite: {fileID: 21300000, guid: 395fc59d8b4ec47b4897964f480f7377, type: 3}
+    EffectFrequency: 1.5
+    EffectValue: 1

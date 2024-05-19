@@ -16,5 +16,5 @@ MonoBehaviour:
   InitialRank: 1
   InitialHealth: 3
   totalHealth: 3
-  Speed: 1
+  Speed: 300
   VerticalOffset: 0

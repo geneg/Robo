@@ -11,6 +11,7 @@ namespace com.euge.minigame.Common
 
 		public void RegisterService<T>(T service) where T : BaseService
 		{
+			service.InjectServiceResolver(this);
 			_services[typeof(T)] = service;
 		}
 

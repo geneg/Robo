@@ -16,3 +16,4 @@ MonoBehaviour:
   LevelsConfigurationKey: LevelsConfig
   ThemesConfigurationKey: ThemesConfig
   PlayerConfigurationKey: PlayerConfig
+  ItemsConfigurationKey: ItemsConfig

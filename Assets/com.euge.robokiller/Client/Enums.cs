@@ -2,18 +2,24 @@ using System;
 
 namespace com.euge.robokiller.Client
 {
-	public class Enums
+	[Serializable]
+	public enum ItemType
 	{
-		
+		enemy = 0,
+		chest = 1,
+		rank = 2,
+
 	}
 	
 	[Serializable]
-	public enum PoiType
+	public enum PowerUpType
 	{
-		StartPoint,
-		Enemy,
-		Chest,
-		Rank,
-		FinishPoint,
+		health = 0,
+		bomb = 1,
+		shield = 2,
+		sword = 3,
+		rankUp = 4,
+		damage = 5, //negative powerup
+		
 	}
 }
