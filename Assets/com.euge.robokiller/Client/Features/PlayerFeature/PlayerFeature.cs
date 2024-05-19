@@ -16,22 +16,25 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		public List<ThemeableElement> GetThemeableElements() => _player.GetThemeableElements();
 		public float GetSpeed() => _playerConfig.Speed;
 		public event Action<BaseItem> OnItemInteracted;
+		public Inventory Inventory { get; }
+
 		private readonly string _playerConfigurationKey;
 		private Player _player;
 		private PlayerConfigugation _playerConfig;
 		private readonly Transform _parent;
-		
+
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
 			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
+			
+			Inventory = new Inventory();
 		}
 
 		public override async Task Initialize()
 		{
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
 			_player = await Loaders.Instantiate<Player>(_playerConfig.AddressableKey, _parent);
-			
 		}
 		
 		public void BeginPlayerMove(Vector2 position)
@@ -45,6 +48,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		{
 			_player.PlayerTransform.anchoredPosition = position;
 		}
+
 		
 	}
 }

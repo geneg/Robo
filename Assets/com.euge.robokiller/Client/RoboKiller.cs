@@ -4,16 +4,12 @@ using com.euge.minigame;
 using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
-using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features;
 using com.euge.robokiller.Client.Features.ItemsFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.PathFeature;
 using com.euge.robokiller.Client.Features.PlayerFeature;
 using com.euge.robokiller.Client.Features.ThemesFeature;
-using DG.Tweening;
-using UnityEngine;
-
 
 namespace com.euge.robokiller.Client
 {
@@ -27,7 +23,7 @@ namespace com.euge.robokiller.Client
 		private ScrollFeature _scrollFeature;
 		private MovementFeature _movementFeature;
 		private ItemsFeature _itemsFeature;
-
+		
 		public RoboKiller(VisualBridge visualBridge)
 		{
 			_visualBridge = visualBridge;
@@ -71,11 +67,11 @@ namespace com.euge.robokiller.Client
 		private void BeginGame()
 		{
 			_playerFeature.OnItemInteracted += OnItemInteracted;
-			
+
 			_movementFeature.BeginMove();
 			_movementFeature.Move();
 		}
-		
+
 		private void OnItemInteracted(BaseItem item)
 		{
 			item.Interact();

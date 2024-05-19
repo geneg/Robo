@@ -4,8 +4,8 @@ using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Client.Features.PathFeature;
-using com.euge.robokiller.Client.Features.PlayerFeature;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 using com.euge.robokiller.Configs;
 using UnityEngine;
@@ -27,16 +27,27 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		public override async Task Initialize()
 		{
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
+			PlayerFeature.PlayerFeature playerFeature = GetServiceResolver.GetService<PlayerFeature.PlayerFeature>();
+			
 			ItemLayout[] pathItemsLayout = pathFeature.GetPathItemsLayout();
 			Transform itemsParent = pathFeature.GetItemsParent();
 			List<Task<BaseItem>> tasks = new List<Task<BaseItem>>();
 			
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-
+			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, playerFeature.Inventory, _itemsConfig);
+			
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{
-				tasks.Add(itemFactory.CreateItem(itemMeta));
+				BaseItem item = await itemFactory.Create(itemMeta);
+				
+				if (powerUpFactory.IsConstantPowerUp(itemMeta.Type))
+				{
+					IPowerUp powerUp = powerUpFactory.Create(itemMeta.Type);
+					item.InjectPowerUp(powerUp); 
+				}
+				
+				tasks.Add(Task.FromResult(item));
 			}
 
 			BaseItem[] items = await Task.WhenAll(tasks);

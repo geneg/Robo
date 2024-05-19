@@ -15,3 +15,35 @@ MonoBehaviour:
   ChestKey: Chest
   EnemyKey: Enemy
   RankKey: Rank
+  itemsData:
+  - itemType: 0
+    contantPowerUp: 1
+  - itemType: 1
+    contantPowerUp: 0
+  - itemType: 2
+    contantPowerUp: 1
+  powerUps:
+  - powerUpType: 0
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+  - powerUpType: 1
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+  - powerUpType: 2
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+  - powerUpType: 3
+    relatedItemType: 1
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+  - powerUpType: 4
+    relatedItemType: 2
+    powerUpSprite: {fileID: 0}
+    EffectFrequency: 0
+  - powerUpType: 5
+    relatedItemType: 0
+    powerUpSprite: {fileID: 21300000, guid: 395fc59d8b4ec47b4897964f480f7377, type: 3}
+    EffectFrequency: 1.5

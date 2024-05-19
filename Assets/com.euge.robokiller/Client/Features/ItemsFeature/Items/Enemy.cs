@@ -20,7 +20,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		
 		public override void Interact()
 		{
-			// Apply damage every 1.5 seconds
+			_powerUp.Apply();
 		}
 		
 		private void IdleState()

@@ -1,4 +1,6 @@
-namespace com.euge.robokiller.Client.Features.ItemsFeature
+using UnityEngine;
+
+namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class Shield : IPowerUp
 	{
@@ -6,5 +8,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		{
 			// Apply shield powerup
 		}
+		public Sprite PowerUpSprite { get; }
 	}
 }

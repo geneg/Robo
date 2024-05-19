@@ -1,7 +1,6 @@
-using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using UnityEngine;
 
-namespace com.euge.robokiller.Client.Features.ItemsFeature
+namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 {
 	public class Rank : BaseItem
 	{

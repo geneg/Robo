@@ -1,4 +1,6 @@
-namespace com.euge.robokiller.Client.Features.ItemsFeature
+using UnityEngine;
+
+namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class Sword : IPowerUp
 	{
@@ -6,5 +8,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		{
 			// Apply bomb powerup
 		}
+		
+		public Sprite PowerUpSprite { get; }
+
 	}
 }
