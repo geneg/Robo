@@ -27,7 +27,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		public override async Task Initialize()
 		{
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
-			PlayerFeature.PlayerFeature playerFeature = GetServiceResolver.GetService<PlayerFeature.PlayerFeature>();
+			InventoryFeature.InventoryFeature inventoryFeature = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
 			
 			ItemLayout[] pathItemsLayout = pathFeature.GetPathItemsLayout();
 			Transform itemsParent = pathFeature.GetItemsParent();
@@ -35,7 +35,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, playerFeature.Inventory, _itemsConfig);
+			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, inventoryFeature, _itemsConfig);
 			
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{

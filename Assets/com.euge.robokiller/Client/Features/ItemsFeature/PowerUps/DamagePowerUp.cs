@@ -1,3 +1,5 @@
+using com.euge.minigame.Common;
+using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.PlayerFeature;
 using com.euge.robokiller.Configs;
 using DG.Tweening;
@@ -8,22 +10,31 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 	public class DamagePowerUp : IPowerUp
 	{
 		private float _attackFrequency;
-		private Inventory _inventory;
+		private IInventory _inventory;
 		private Sequence _damageSequence;
+		private readonly float _attackStrength;
 
-		public DamagePowerUp(PowerUpData data) {
+		public DamagePowerUp(PowerUpData data, IInventory inventory)
+		{
+			_inventory = inventory;
 			_attackFrequency = data.EffectFrequency;
+			_attackStrength = data.EffectValue;
 			PowerUpSprite = data.powerUpSprite;
-			_inventory = data.Inventory;
 		}
 
 		public void Apply()
 		{
+			PowerUpEffect effect = new PowerUpEffect
+			{
+				HealthDelta = (int) _attackStrength * -1
+			};
+
 			_damageSequence = DOTween.Sequence()
 				.AppendInterval(_attackFrequency)
-				.AppendCallback(() => _inventory.RemoveHealth(1)).SetLoops(-1);
+				.AppendCallback(() => _inventory.UpdateInventory(effect))
+				.SetLoops(loops:-1);
 		}
-		
+
 		public void StopEffect()
 		{
 			if (_damageSequence != null)
@@ -32,7 +43,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 				_damageSequence = null;
 			}
 		}
-		
+
 		public Sprite PowerUpSprite { get; }
 
 

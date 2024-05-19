@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Client.Features.PathFeature;
@@ -13,9 +14,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 	{
 		private readonly ItemsConfiguration _itemsConfig; 
 		private readonly Transform _parent;
-		private readonly Inventory _inventory;
+		private readonly IInventory _inventory;
 
-		public PowerUpFactory(Transform parent, Inventory inventory, ItemsConfiguration powerUpConfig)
+		public PowerUpFactory(Transform parent, IInventory inventory, ItemsConfiguration powerUpConfig)
 		{
 			_parent = parent;
 			_itemsConfig = powerUpConfig;
@@ -37,14 +38,13 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 			
 			//if there is more than one constant powerUp for the same item type, choose one randomly
 			data = dataList[UnityEngine.Random.Range(0, dataList.Count)];
-			data.Inventory = _inventory;
 			
 			switch (data.powerUpType)
 			{
 				case PowerUpType.rankUp:
 					return new RankUp(data);
 				case PowerUpType.damage:
-					return new DamagePowerUp(data);
+					return new DamagePowerUp(data, _inventory);
 				default:
 					throw new Exception("Unknown powerUp type");
 			}

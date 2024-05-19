@@ -5,6 +5,7 @@ using com.euge.minigame.Common;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.robokiller.Client.Features;
+using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.PathFeature;
@@ -23,7 +24,8 @@ namespace com.euge.robokiller.Client
 		private ScrollFeature _scrollFeature;
 		private MovementFeature _movementFeature;
 		private ItemsFeature _itemsFeature;
-		
+		private InventoryFeature _inventoryFeature;
+
 		public RoboKiller(VisualBridge visualBridge)
 		{
 			_visualBridge = visualBridge;
@@ -53,6 +55,9 @@ namespace com.euge.robokiller.Client
 
 			_itemsFeature = new ItemsFeature(appConfig);
 			_clientServiceResolver.RegisterService(_itemsFeature);
+			
+			_inventoryFeature = new InventoryFeature(appConfig, _visualBridge.InventoryPanel);
+			_clientServiceResolver.RegisterService(_inventoryFeature);
 			#endregion
 
 			await _clientServiceResolver.InitializeServices();

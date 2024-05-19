@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,13 +8,22 @@ namespace com.euge.minigame.Utils
 {
 	public static class Loaders
 	{
+		private static readonly Dictionary<string, object> _cache = new Dictionary<string, object>();
+		
 		public static async Task<T> LoadAsset<T>(string configFileKey)
 		{
+			if (_cache.TryGetValue(configFileKey, out object cachedAsset))
+			{
+				return (T)cachedAsset;
+			}
+			
 			AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(configFileKey);
 			await handle.Task;
 					
 			if (handle.Status == AsyncOperationStatus.Succeeded)
 			{
+				 // Store the loaded asset in the cache
+				_cache[configFileKey] = handle.Result;
 				return handle.Result;
 			}
 			else

@@ -36,8 +36,6 @@ namespace com.euge.robokiller.Configs
 		
 		[Tooltip("If the value is 0.5, the effect is applied every 0.5 seconds. If the value is 0, the effect is applied only once.")]
 		public float EffectFrequency;
-		
-		[field: NonSerialized]
-		public Inventory Inventory { get; set;}
+		public float EffectValue;
 	}
 }
