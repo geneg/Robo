@@ -24,7 +24,6 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private Player _player;
 		private PlayerConfigugation _playerConfig;
 		private readonly Transform _parent;
-		private BaseItem _interactibleItem;
 		private MovementFeature _movementFeature;
 		private IInventory _inventory;
 		private bool _isDead;
@@ -78,7 +77,6 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private void OnItemInteractedInner(BaseItem item)
 		{
 			OnItemInteracted?.Invoke(item); // Forwarding the event
-			_interactibleItem = item;
 		}
 
 		//returns true if player is alive and can interact with the item

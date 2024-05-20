@@ -13,7 +13,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		[SerializeField] private GameObject _idle;
 		[SerializeField] private GameObject _attack;
 		[SerializeField] private HpBar _hpBar;
-		[FormerlySerializedAs("_effect")]
 		[SerializeField] private Image _additionalGraphicsImage;
 		private bool _isAttacking;
 		private EnemyData _additionalData;
