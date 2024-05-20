@@ -7,21 +7,18 @@ using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
-	public class DamagePowerUp : IPowerUp
+	public class DamagePowerUp : BasePowerUp, IPowerUp
 	{
-		private float _attackFrequency;
-		private IInventory _inventory;
+		private readonly float _attackFrequency;
 		private Sequence _damageSequence;
 		private readonly float _attackStrength;
 		
 		public event PowerUpUpdateHandler OnAnimate;
 
-		public DamagePowerUp(PowerUpData data, IInventory inventory)
+		public DamagePowerUp(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
-			_inventory = inventory;
 			_attackFrequency = data.EffectFrequency;
 			_attackStrength = data.EffectValue;
-			PowerUpSprite = data.powerUpSprite;
 		}
 
 		public void Apply()
@@ -35,7 +32,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 				.AppendInterval(_attackFrequency)
 				.AppendCallback(() => {
 					OnAnimate?.Invoke();
-					_inventory.UpdateInventory(effect);
+					_playerFeature.ApplyPowerUp(effect);
 				})
 				.SetLoops(loops:-1);
 		}
@@ -48,9 +45,5 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 				_damageSequence = null;
 			}
 		}
-
-		public Sprite PowerUpSprite { get; }
-
-
 	}
 }

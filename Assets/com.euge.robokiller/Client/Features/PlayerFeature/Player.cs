@@ -71,5 +71,10 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			if (!_isPlayerWalking) return;
 			OnClicked?.Invoke();
 		}
+
+		public void Die()
+		{
+			_currentTween?.Kill();
+		}
 	}
 }

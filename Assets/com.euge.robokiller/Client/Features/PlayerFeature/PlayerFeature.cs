@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
+using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 using com.euge.robokiller.Configs;
 using UnityEngine;
@@ -12,7 +14,7 @@ using UnityEngine.EventSystems;
 
 namespace com.euge.robokiller.Client.Features.PlayerFeature
 {
-	public class PlayerFeature : BaseService, IThemeable
+	public class PlayerFeature : BaseService, IThemeable, IPlayerFeature
 	{
 		public List<ThemeableElement> GetThemeableElements() => _player.GetThemeableElements();
 		public float GetSpeed() => _playerConfig.Speed;
@@ -24,6 +26,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private readonly Transform _parent;
 		private BaseItem _interactibleItem;
 		private MovementFeature _movementFeature;
+		private IInventory _inventory;
 
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
@@ -36,6 +39,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
 			_player = await Loaders.Instantiate<Player>(_playerConfig.AddressableKey, _parent);
 			
+			_inventory = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
 			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
 		}
 		
@@ -45,6 +49,11 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			_player.OnClicked += OnPlayerClicked;
 			_player.Relax();
 			_player.PlayerTransform.anchoredPosition = position;
+		}
+
+		public void ApplyPowerUp(PowerUpEffect effect)
+		{
+			_inventory.UpdateInventory(effect);
 		}
 		
 		private void OnPlayerClicked()
@@ -61,6 +70,11 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		public void PlayerInteraction()
 		{
 			_player.Attack();
+		}
+
+		public void Hit()
+		{
+			
 		}
 		
 		public void MoveTo(Vector2 position)

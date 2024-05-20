@@ -40,7 +40,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _inventoryFeature, _itemsConfig);
+			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _playerFeature, _itemsConfig);
 
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{
