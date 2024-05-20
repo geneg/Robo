@@ -14,6 +14,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		[SerializeField] private GameObject _attack;
 		[SerializeField] private HpBar _hpBar;
 		[SerializeField] private Image _additionalGraphicsImage;
+		
 		private bool _isAttacking;
 		private EnemyData _additionalData;
 		private int _hitPoints;
@@ -81,6 +82,11 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			AdditionalGraphicsAnimation();
 			if (_hitPoints > 0) return;
 			
+			Kill();
+		}
+		
+		private void Kill()
+		{
 			_powerUp.StopEffect();
 			_powerUp.OnAnimate -= AttackAnimation;
 			_currentTween.Kill();
@@ -89,7 +95,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			gameObject.SetActive(false);
 			InvokeOnItemExhaust();
 		}
-		
+
 		public void SetAdditionalData(string json)
 		{
 			_additionalData = JsonUtility.FromJson<EnemyData>(json);

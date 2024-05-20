@@ -82,7 +82,5 @@ namespace com.euge.robokiller.Client
 			item.Interact();
 			_movementFeature.PauseMove();
 		}
-
-
 	}
 }

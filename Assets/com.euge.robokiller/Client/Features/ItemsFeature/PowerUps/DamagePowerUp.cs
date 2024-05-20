@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using com.euge.minigame.Common;
 using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.PlayerFeature;
@@ -29,14 +30,14 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 			};
 
 			_effect.OnStopEffect += StopEffect;
-			
+
 			_damageSequence = DOTween.Sequence()
 				.AppendInterval(_attackFrequency)
 				.AppendCallback(() => {
 					OnAnimate?.Invoke();
 					_playerFeature.ApplyPowerUp(_effect);
 				})
-				.SetLoops(loops:-1);
+				.SetLoops(loops: -1);
 		}
 
 		public void StopEffect()

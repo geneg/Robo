@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
@@ -13,11 +14,13 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		private readonly string _playerConfigurationKey;
 		private PlayerConfigugation _playerConfig;
 		private readonly InventoryPanel _inventoryPanel;
-
+		
+		
 		private InventoryData _inventoryData;
 
 		public InventoryFeature(AppConfiguration appConfig, InventoryPanel inventoryPanel)
 		{
+			
 			_inventoryData = new InventoryData();
 			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
 			_inventoryPanel = inventoryPanel;
@@ -54,7 +57,12 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 				_inventoryPanel.SetRank(_inventoryData.Rank);
 			}
 			
-			
+			//bomb
+			if (effect.InvertoryItem && _inventoryData.PowerUps.TryAdd(effect.PowerUpType, effect))
+			{
+				_inventoryPanel.AddPowerUp(effect);
+			}
+
 		}
 
 		public InventoryData ReadInventory()
@@ -69,5 +77,7 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		public int Health { get; set; }
 		public int Rank { get; set; }
 		public int TotalHealth { get; set; }
+
+		public readonly Dictionary<PowerUpType, PowerUpEffect> PowerUps = new Dictionary<PowerUpType, PowerUpEffect>();
 	}
 }

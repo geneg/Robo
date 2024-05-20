@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
@@ -8,6 +9,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		
 		public int HealthDelta { get; set; }
 		public int Rank { get; set; }
+		public Sprite PowerUpSprite { get; set; }
 		
 		public void Stop()
 		{
