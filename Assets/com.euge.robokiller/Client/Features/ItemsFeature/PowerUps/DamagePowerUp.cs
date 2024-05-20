@@ -12,7 +12,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		private readonly float _attackFrequency;
 		private Sequence _damageSequence;
 		private readonly float _attackStrength;
-		
+		private PowerUpEffect _effect;
 		public event PowerUpUpdateHandler OnAnimate;
 
 		public DamagePowerUp(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
@@ -23,22 +23,25 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 
 		public void Apply()
 		{
-			PowerUpEffect effect = new PowerUpEffect
+			_effect = new PowerUpEffect
 			{
-				HealthDelta = (int) _attackStrength * -1
+				HealthDelta = (int) _attackStrength * -1,
 			};
 
+			_effect.OnStopEffect += StopEffect;
+			
 			_damageSequence = DOTween.Sequence()
 				.AppendInterval(_attackFrequency)
 				.AppendCallback(() => {
 					OnAnimate?.Invoke();
-					_playerFeature.ApplyPowerUp(effect);
+					_playerFeature.ApplyPowerUp(_effect);
 				})
 				.SetLoops(loops:-1);
 		}
 
-		public void Stop()
+		public void StopEffect()
 		{
+			_effect.OnStopEffect -= StopEffect;
 			if (_damageSequence != null)
 			{
 				_damageSequence.Kill();

@@ -23,7 +23,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 			_playerFeature.ApplyPowerUp(_effect);
 		}
 		
-		public void Stop()
+		public void StopEffect()
 		{
 			// do clean job if needed, stop animations, etc 
 		}

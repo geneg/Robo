@@ -27,7 +27,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private BaseItem _interactibleItem;
 		private MovementFeature _movementFeature;
 		private IInventory _inventory;
-
+		private bool _isDead;
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
@@ -54,10 +54,24 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		public void ApplyPowerUp(PowerUpEffect effect)
 		{
 			_inventory.UpdateInventory(effect);
+			
+			if (effect.HealthDelta < 0) // if health affected negatively, then check if player is dead
+			{
+				_player.Hit();
+				InventoryData inventoryData = _inventory.ReadInventory();
+				
+				if (inventoryData.Health <= 0)
+				{
+					_isDead = true;
+					effect.Stop();
+					_player.Die();
+				}
+			}
 		}
 		
 		private void OnPlayerClicked()
 		{
+			if (_isDead) return;
 			_movementFeature.ResumeMove();
 		}
 
@@ -67,14 +81,13 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			_interactibleItem = item;
 		}
 
-		public void PlayerInteraction()
+		//returns true if player is alive and can interact with the item
+		public bool PlayerInteraction()
 		{
-			_player.Attack();
-		}
-
-		public void Hit()
-		{
+			if (_isDead) return false;
 			
+			_player.Attack();
+			return true;
 		}
 		
 		public void MoveTo(Vector2 position)

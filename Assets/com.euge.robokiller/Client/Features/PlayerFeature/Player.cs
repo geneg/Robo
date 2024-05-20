@@ -14,12 +14,11 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 	{
 		[SerializeField] private RaycastGameObject _regularPose;
 		[SerializeField] private RaycastGameObject _attackPose;
-		
 		[SerializeField] private List<ThemeableElement> _themeableElements;
 		[SerializeField] RectTransform _playerTransform;
 		private Tween _currentTween;
 		private bool _isPlayerWalking = true;
-
+		private bool _surpressOnTrigger;
 		public RectTransform PlayerTransform => _playerTransform;
 		public Action OnClicked { get; set; }
 
@@ -46,14 +45,17 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 
 		private void OnTriggerExit2D(Collider2D other)
 		{
+			if(_surpressOnTrigger) return;
+			
 			_isPlayerWalking = true;
 			_regularPose.RaycastTarget = true;
 			_attackPose.RaycastTarget = true;
-			
 		}
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
+			if(_surpressOnTrigger) return;
+			
 			BaseItem item = other.GetComponent<BaseItem>();
 			if (item == null) return;
 
@@ -74,7 +76,15 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 
 		public void Die()
 		{
-			_currentTween?.Kill();
+			transform.DOKill();
+			_currentTween?.Kill(); //stop killing when killed
+		}
+		
+		public void Hit()
+		{
+			_surpressOnTrigger = true; //prevent OnTrigger events from firing on shake
+			transform.DOKill();
+			transform.DOShakePosition(0.5f, 10, 10, 90, false).OnComplete(() => _surpressOnTrigger = false);
 		}
 	}
 }

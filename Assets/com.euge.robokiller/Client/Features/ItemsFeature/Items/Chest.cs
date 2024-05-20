@@ -28,7 +28,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			_item.transform.localScale = Vector3.zero;
 			
 			_item.transform.DOPunchScale(Vector3.one * 3, 1f, 0, 0).SetEase(Ease.OutBounce).OnComplete(() => {
-				_powerUp.Stop();
+				_powerUp.StopEffect();
 				CloseChest();
 				
 				gameObject.SetActive(false);

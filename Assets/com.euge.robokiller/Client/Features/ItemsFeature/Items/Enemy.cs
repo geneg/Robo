@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
@@ -12,7 +13,8 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		[SerializeField] private GameObject _idle;
 		[SerializeField] private GameObject _attack;
 		[SerializeField] private HpBar _hpBar;
-		[SerializeField] private Image _effect;
+		[FormerlySerializedAs("_effect")]
+		[SerializeField] private Image _additionalGraphicsImage;
 		private bool _isAttacking;
 		private EnemyData _additionalData;
 		private int _hitPoints;
@@ -32,7 +34,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			_hpBar.SetTotal(_hitPoints);
 			_hpBar.SetValue(_hitPoints);
 			_isAttacking = true;
-			_effect.sprite = _powerUp.PowerUpSprite;
+			_additionalGraphicsImage.sprite = _powerUp.PowerUpSprite;
 			_powerUp.OnAnimate += AttackAnimation;
 			_powerUp.Apply();
 		}
@@ -40,21 +42,21 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		private void AttackAnimation()
 		{
 			AttackState();
-			EffectAnimation();
+			AdditionalGraphicsAnimation();
 			_currentTween = DOVirtual.DelayedCall(0.2f, IdleState);
 		}
 		
-		private void EffectAnimation()
+		private void AdditionalGraphicsAnimation()
 		{
-			_effect.gameObject.SetActive(true);
-			_effect.transform.localScale = Vector3.zero;
-			_effect.transform.DOPunchScale(Vector3.one, 0.5f, 5, 0.1f)
-				.OnComplete(() => _effect.gameObject.SetActive(false));
+			_additionalGraphicsImage.gameObject.SetActive(true);
+			_additionalGraphicsImage.transform.localScale = Vector3.zero;
+			_additionalGraphicsImage.transform.DOPunchScale(Vector3.one, 0.5f, 5, 0.1f)
+				.OnComplete(() => _additionalGraphicsImage.gameObject.SetActive(false));
 		}
 		
 		private void IdleState()
 		{
-			_effect.gameObject.SetActive(false);
+			_additionalGraphicsImage.gameObject.SetActive(false);
 			_idle.SetActive(true);
 			_attack.SetActive(false);
 		}
@@ -77,12 +79,13 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		{
 			_hitPoints -= rank;
 			_hpBar.SetValue(_hitPoints);
-			EffectAnimation();
+			AdditionalGraphicsAnimation();
 			if (_hitPoints > 0) return;
 			
-			_powerUp.Stop();
+			_powerUp.StopEffect();
 			_powerUp.OnAnimate -= AttackAnimation;
 			_currentTween.Kill();
+			
 			_hpBar.gameObject.SetActive(false);
 			gameObject.SetActive(false);
 			InvokeOnItemExhaust();

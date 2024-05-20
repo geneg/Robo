@@ -17,7 +17,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 			// Apply shield powerup
 		}
 		
-		public void Stop()
+		public void StopEffect()
 		{
 			// do clean job if needed, stop animations, etc 
 		}

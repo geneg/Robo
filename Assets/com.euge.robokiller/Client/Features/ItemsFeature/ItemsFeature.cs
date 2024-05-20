@@ -85,8 +85,10 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 		private void OnItemClicked(BaseItem item)
 		{
-			_playerFeature.PlayerInteraction();
-			item.Hit(_inventoryFeature.ReadInventory().Rank);
+			if (_playerFeature.PlayerInteraction())
+			{
+				item.Hit(_inventoryFeature.ReadInventory().Rank);
+			}
 		}
 
 		public List<ThemeableElement> GetThemeableElements()
