@@ -8,6 +8,7 @@ using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 using com.euge.robokiller.Configs;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace com.euge.robokiller.Client.Features.PlayerFeature
 {
@@ -22,6 +23,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private PlayerConfigugation _playerConfig;
 		private readonly Transform _parent;
 		private BaseItem _interactibleItem;
+		private MovementFeature _movementFeature;
 
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
@@ -33,27 +35,39 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		{
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
 			_player = await Loaders.Instantiate<Player>(_playerConfig.AddressableKey, _parent);
+			
+			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
 		}
 		
 		public void BeginPlayerMove(Vector2 position)
 		{
 			_player.OnItemInteracted += OnItemInteractedInner;
-			
-			_player.SetIdlePose();
+			_player.OnClicked += OnPlayerClicked;
+			_player.Relax();
 			_player.PlayerTransform.anchoredPosition = position;
 		}
 		
+		private void OnPlayerClicked()
+		{
+			_movementFeature.ResumeMove();
+		}
+
 		private void OnItemInteractedInner(BaseItem item)
 		{
 			OnItemInteracted?.Invoke(item); // Forwarding the event
 			_interactibleItem = item;
 		}
 
+		public void PlayerInteraction()
+		{
+			_player.Attack();
+		}
+		
 		public void MoveTo(Vector2 position)
 		{
 			_player.PlayerTransform.anchoredPosition = position;
 		}
-
+		
 		
 	}
 }

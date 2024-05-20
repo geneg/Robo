@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 484113655080330966}
   - component: {fileID: 785712421532696503}
   - component: {fileID: 7838803613525328131}
+  - component: {fileID: 6399407282007239096}
   m_Layer: 5
   m_Name: attack
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6399407282007239096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592259025994897053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b185a4722d8140519cd0805e2b9abf1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _graphics: {fileID: 7838803613525328131}
 --- !u!1 &4300812834723103821
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09363cc537549f186f117b21abb4869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _regularPose: {fileID: 7036134883438585889}
-  _attackPose: {fileID: 3592259025994897053}
+  _regularPose: {fileID: 6651621490443387046}
+  _attackPose: {fileID: 6399407282007239096}
   _themeableElements:
   - ThemeProperty: player
     ThemeableImage:
@@ -239,6 +253,7 @@ GameObject:
   - component: {fileID: 1965911736693799420}
   - component: {fileID: 5688767895864131549}
   - component: {fileID: 1379041485398455597}
+  - component: {fileID: 6651621490443387046}
   m_Layer: 5
   m_Name: idle
   m_TagString: Untagged
@@ -303,3 +318,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6651621490443387046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036134883438585889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b185a4722d8140519cd0805e2b9abf1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _graphics: {fileID: 1379041485398455597}

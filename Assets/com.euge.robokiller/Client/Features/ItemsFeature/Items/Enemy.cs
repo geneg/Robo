@@ -40,9 +40,16 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		private void AttackAnimation()
 		{
 			AttackState();
-			
-			_effect.transform.DOPunchScale(Vector3.one, 0.5f, 5, 0.1f);
+			EffectAnimation();
 			_currentTween = DOVirtual.DelayedCall(0.2f, IdleState);
+		}
+		
+		private void EffectAnimation()
+		{
+			_effect.gameObject.SetActive(true);
+			_effect.transform.localScale = Vector3.zero;
+			_effect.transform.DOPunchScale(Vector3.one, 0.5f, 5, 0.1f)
+				.OnComplete(() => _effect.gameObject.SetActive(false));
 		}
 		
 		private void IdleState()
@@ -54,7 +61,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 
 		private void AttackState()
 		{
-			_effect.gameObject.SetActive(true);
 			_idle.SetActive(false);
 			_attack.SetActive(true);
 		}
@@ -71,7 +77,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		{
 			_hitPoints -= rank;
 			_hpBar.SetValue(_hitPoints);
-			
+			EffectAnimation();
 			if (_hitPoints > 0) return;
 			
 			_powerUp.Stop();

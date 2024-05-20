@@ -20,6 +20,6 @@ namespace com.euge.robokiller.Client
 		sword = 3,
 		rankUp = 4,
 		damage = 5, //negative powerup
-		
 	}
+	
 }

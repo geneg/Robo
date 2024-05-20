@@ -19,6 +19,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private List<BaseItem> _items;
 		private InventoryFeature.InventoryFeature _inventoryFeature;
 		private MovementFeature _movementFeature;
+		private PlayerFeature.PlayerFeature _playerFeature;
 
 		public ItemsFeature(AppConfiguration appConfig)
 		{
@@ -31,6 +32,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
 			_inventoryFeature = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
 			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
+			_playerFeature = GetServiceResolver.GetService<PlayerFeature.PlayerFeature>();
 
 			ItemLayout[] pathItemsLayout = pathFeature.GetPathItemsLayout();
 			Transform itemsParent = pathFeature.GetItemsParent();
@@ -83,7 +85,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 		private void OnItemClicked(BaseItem item)
 		{
-			//do player attack
+			_playerFeature.PlayerInteraction();
 			item.Hit(_inventoryFeature.ReadInventory().Rank);
 		}
 

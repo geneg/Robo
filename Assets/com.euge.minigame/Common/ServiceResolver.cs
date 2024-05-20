@@ -31,6 +31,11 @@ namespace com.euge.minigame.Common
 		{
 			foreach (BaseService service in _services.Values)
 			{
+				//TODO:
+				// create injection table kind of dictionary with what inject to where
+				// and ingect services one to another here
+				// get rid of GetServiceResolver() method
+				
 				await service.Initialize();
 			}
 		}

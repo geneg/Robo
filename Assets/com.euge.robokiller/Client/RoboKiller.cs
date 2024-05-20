@@ -59,7 +59,7 @@ namespace com.euge.robokiller.Client
 			_inventoryFeature = new InventoryFeature(appConfig, _visualBridge.InventoryPanel);
 			_clientServiceResolver.RegisterService(_inventoryFeature);
 			#endregion
-
+			
 			await _clientServiceResolver.InitializeServices();
 
 			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
