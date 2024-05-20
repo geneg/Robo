@@ -247,7 +247,7 @@ MonoBehaviour:
   _idle: {fileID: 2863923809069195949}
   _attack: {fileID: 1533660286742977201}
   _hpBar: {fileID: 7682392045139467764}
-  _effect: {fileID: 2419351013742554381}
+  _additionalGraphicsImage: {fileID: 2419351013742554381}
 --- !u!61 &5374702577130069751
 BoxCollider2D:
   m_ObjectHideFlags: 0

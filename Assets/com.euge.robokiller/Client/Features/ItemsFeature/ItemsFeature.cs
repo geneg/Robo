@@ -40,7 +40,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
 			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
-			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _inventoryFeature, _itemsConfig);
+			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _playerFeature, _itemsConfig);
 
 			foreach (ItemLayout itemMeta in pathItemsLayout)
 			{
@@ -85,8 +85,10 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 		private void OnItemClicked(BaseItem item)
 		{
-			_playerFeature.PlayerInteraction();
-			item.Hit(_inventoryFeature.ReadInventory().Rank);
+			if (_playerFeature.PlayerInteraction())
+			{
+				item.Hit(_inventoryFeature.ReadInventory().Rank);
+			}
 		}
 
 		public List<ThemeableElement> GetThemeableElements()

@@ -14,13 +14,13 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 	{
 		private readonly ItemsConfiguration _itemsConfig; 
 		private readonly Transform _parent;
-		private readonly IInventory _inventory;
+		private readonly IPlayerFeature _playerFeature;
 
-		public PowerUpFactory(Transform parent, IInventory inventory, ItemsConfiguration powerUpConfig)
+		public PowerUpFactory(Transform parent, IPlayerFeature playerFeature, ItemsConfiguration powerUpConfig)
 		{
 			_parent = parent;
 			_itemsConfig = powerUpConfig;
-			_inventory = inventory;
+			_playerFeature = playerFeature;
 		}
 		
 		public IPowerUp CreateDynamically(ItemType itemType, List<PowerUpType> exclude)
@@ -46,13 +46,13 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 			switch (data.powerUpType)
 			{
 				case PowerUpType.bomb:
-					return new Bomb(data, _inventory);
+					return new Bomb(data, _playerFeature);
 				case PowerUpType.health:
-					return new HealthUp(data, _inventory);
+					return new HealthUp(data, _playerFeature);
 				case PowerUpType.shield:
-					return new Shield(data, _inventory);
+					return new Shield(data, _playerFeature);
 				case PowerUpType.sword:
-					return new Sword(data, _inventory);
+					return new Sword(data, _playerFeature);
 				default:
 					throw new Exception("Unknown powerUp type");
 			}
@@ -77,9 +77,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature {
 			switch (data.powerUpType)
 			{
 				case PowerUpType.rankUp:
-					return new RankUp(data, _inventory);
+					return new RankUp(data, _playerFeature);
 				case PowerUpType.damage:
-					return new DamagePowerUp(data, _inventory);
+					return new DamagePowerUp(data, _playerFeature);
 				default:
 					throw new Exception("Unknown powerUp type");
 			}

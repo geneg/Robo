@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
+using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
+using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 using com.euge.robokiller.Configs;
 using UnityEngine;
@@ -12,7 +14,7 @@ using UnityEngine.EventSystems;
 
 namespace com.euge.robokiller.Client.Features.PlayerFeature
 {
-	public class PlayerFeature : BaseService, IThemeable
+	public class PlayerFeature : BaseService, IThemeable, IPlayerFeature
 	{
 		public List<ThemeableElement> GetThemeableElements() => _player.GetThemeableElements();
 		public float GetSpeed() => _playerConfig.Speed;
@@ -22,9 +24,9 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private Player _player;
 		private PlayerConfigugation _playerConfig;
 		private readonly Transform _parent;
-		private BaseItem _interactibleItem;
 		private MovementFeature _movementFeature;
-
+		private IInventory _inventory;
+		private bool _isDead;
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
@@ -36,6 +38,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
 			_player = await Loaders.Instantiate<Player>(_playerConfig.AddressableKey, _parent);
 			
+			_inventory = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
 			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
 		}
 		
@@ -46,21 +49,43 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			_player.Relax();
 			_player.PlayerTransform.anchoredPosition = position;
 		}
+
+		public void ApplyPowerUp(PowerUpEffect effect)
+		{
+			_inventory.UpdateInventory(effect);
+			
+			if (effect.HealthDelta < 0) // if health affected negatively, then check if player is dead
+			{
+				_player.Hit();
+				InventoryData inventoryData = _inventory.ReadInventory();
+				
+				if (inventoryData.Health <= 0)
+				{
+					_isDead = true;
+					effect.Stop();
+					_player.Die();
+				}
+			}
+		}
 		
 		private void OnPlayerClicked()
 		{
+			if (_isDead) return;
 			_movementFeature.ResumeMove();
 		}
 
 		private void OnItemInteractedInner(BaseItem item)
 		{
 			OnItemInteracted?.Invoke(item); // Forwarding the event
-			_interactibleItem = item;
 		}
 
-		public void PlayerInteraction()
+		//returns true if player is alive and can interact with the item
+		public bool PlayerInteraction()
 		{
+			if (_isDead) return false;
+			
 			_player.Attack();
+			return true;
 		}
 		
 		public void MoveTo(Vector2 position)

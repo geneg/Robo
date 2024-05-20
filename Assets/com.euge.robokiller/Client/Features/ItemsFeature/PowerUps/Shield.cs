@@ -1,28 +1,26 @@
 using com.euge.robokiller.Client.Features.InventoryFeature;
+using com.euge.robokiller.Client.Features.PlayerFeature;
 using com.euge.robokiller.Configs;
 using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
-	public class Shield : IPowerUp
+	public class Shield : BasePowerUp, IPowerUp
 	{
-		private readonly IInventory _inventory;
 		public event PowerUpUpdateHandler OnAnimate;
-		public Shield(PowerUpData data, IInventory inventory)
+		public Shield(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
-			_inventory = inventory;
-			PowerUpSprite = data.powerUpSprite;
 		}
+		
 		public void Apply()
 		{
 			// Apply shield powerup
 		}
 		
-		public void Stop()
+		public void StopEffect()
 		{
 			// do clean job if needed, stop animations, etc 
 		}
 		
-		public Sprite PowerUpSprite { get; }
 	}
 }
