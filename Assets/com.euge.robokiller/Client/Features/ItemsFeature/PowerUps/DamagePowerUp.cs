@@ -8,12 +8,11 @@ using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
-	public class DamagePowerUp : BasePowerUp, IPowerUp
+	public class DamagePowerUp : BasePowerUp, IPowerUp, IAnimatablePowerUp
 	{
 		private readonly float _attackFrequency;
 		private Sequence _damageSequence;
 		private readonly float _attackStrength;
-		private PowerUpEffect _effect;
 		public event PowerUpUpdateHandler OnAnimate;
 
 		public DamagePowerUp(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)

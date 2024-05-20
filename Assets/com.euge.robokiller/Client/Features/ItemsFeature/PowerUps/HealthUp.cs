@@ -7,9 +7,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class HealthUp : BasePowerUp, IPowerUp
 	{
-		public event PowerUpUpdateHandler OnAnimate;
-		private PowerUpEffect _effect;
-		
 		public HealthUp(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
 			_effect = new PowerUpEffect

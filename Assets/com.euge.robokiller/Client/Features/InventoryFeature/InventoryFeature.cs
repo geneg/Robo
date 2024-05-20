@@ -39,26 +39,19 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 
 		public void UpdateInventory(PowerUpEffect effect)
 		{
-			//health
-			int oldValue = _inventoryData.Health;
-			_inventoryData.Health += effect.HealthDelta;
-			
-			if (oldValue != _inventoryData.Health)
+			if (effect.HealthDelta != 0)
 			{
+				_inventoryData.Health += effect.HealthDelta;
 				_inventoryPanel.SetHealth(_inventoryData.Health);
 			}
 			
-			//rank
-			oldValue = _inventoryData.Rank;
-			_inventoryData.Rank += effect.Rank;
-			
-			if (oldValue != _inventoryData.Rank)
+			if (effect.Rank != 0)
 			{
+				_inventoryData.Rank += effect.Rank;
 				_inventoryPanel.SetRank(_inventoryData.Rank);
 			}
 			
-			//bomb
-			if (effect.InvertoryItem && _inventoryData.PowerUps.TryAdd(effect.PowerUpType, effect))
+			if (effect.IsInvertoryItem && _inventoryData.PowerUps.TryAdd(effect.PowerUpType, effect))
 			{
 				_inventoryPanel.AddPowerUp(effect);
 			}

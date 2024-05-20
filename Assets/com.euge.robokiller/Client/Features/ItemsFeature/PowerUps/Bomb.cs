@@ -7,9 +7,6 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class Bomb : BasePowerUp, IPowerUp
 	{
-		private PowerUpEffect _effect;
-		
-		public event PowerUpUpdateHandler OnAnimate;
 		
 		public Bomb(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
@@ -19,10 +16,11 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		{
 			_effect = new PowerUpEffect
 			{
-				EnemyDamage = 1000,
-				UseCount = 1,
+				IsInvertoryItem = true,
 				PowerUpSprite = PowerUpSprite
 			};
+			
+			_playerFeature.ApplyPowerUp(_effect);
 		}
 		
 		public void StopEffect()

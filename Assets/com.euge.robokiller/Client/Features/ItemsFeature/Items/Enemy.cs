@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,7 +36,12 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			_hpBar.SetValue(_hitPoints);
 			_isAttacking = true;
 			_additionalGraphicsImage.sprite = _powerUp.PowerUpSprite;
-			_powerUp.OnAnimate += AttackAnimation;
+			
+			if (_powerUp is IAnimatablePowerUp animatablePowerUp)
+			{
+				animatablePowerUp.OnAnimate += AttackAnimation;
+			}
+			
 			_powerUp.Apply();
 		}
 		
@@ -88,7 +94,12 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		private void Kill()
 		{
 			_powerUp.StopEffect();
-			_powerUp.OnAnimate -= AttackAnimation;
+			
+			if (_powerUp is IAnimatablePowerUp animatablePowerUp)
+			{
+				animatablePowerUp.OnAnimate -= AttackAnimation;
+			}
+			
 			_currentTween.Kill();
 			
 			_hpBar.gameObject.SetActive(false);
