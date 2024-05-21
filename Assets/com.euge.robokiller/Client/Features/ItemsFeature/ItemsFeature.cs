@@ -47,7 +47,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			List<Task<BaseItem>> tasks = new List<Task<BaseItem>>();
 
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
-			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
+			ItemFactory itemFactory = new ItemFactory(itemsParent,_collection, _itemsConfig);
 			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _playerFeature, _itemsConfig);
 
 			foreach (ItemLayout itemMeta in pathItemsLayout)

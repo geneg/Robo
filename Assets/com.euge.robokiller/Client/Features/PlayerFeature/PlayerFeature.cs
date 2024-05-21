@@ -70,7 +70,6 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		
 		public void ApplyPowerUp(PowerUpEffect effect)
 		{
-			int defenseBonus = 0;
 			int idx;
 			for (idx=0; idx<_collection.Count; idx++)
 			{

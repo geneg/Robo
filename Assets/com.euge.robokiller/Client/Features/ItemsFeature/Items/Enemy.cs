@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using DG.Tweening;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		private EnemyData _additionalData;
 		private int _hitPoints;
 		private Tween _currentTween;
+		private List<PowerUpEffect> _collection;
 
 		private void Awake()
 		{
@@ -43,8 +45,25 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			}
 			
 			_powerUp.Apply();
+			
+			//add bomb animation
+			DOVirtual.DelayedCall(0.5f, FindBomb);
+			
 		}
 		
+		private void FindBomb()
+		{
+			foreach (PowerUpEffect powerUpEffect in _collection)
+			{
+				if (powerUpEffect.BlowUp <= 0) continue;
+				powerUpEffect.MarkAsUsed();
+				Hit(powerUpEffect.BlowUp); //using standard Hit-ItemExhaust mechanism
+				break;
+			}
+		}
+
+
+
 		private void AttackAnimation()
 		{
 			AttackState();
@@ -110,6 +129,11 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		public void SetAdditionalData(string json)
 		{
 			_additionalData = JsonUtility.FromJson<EnemyData>(json);
+		}
+		
+		public void SetCollection(List<PowerUpEffect> collection)
+		{
+			_collection = collection;
 		}
 	}
 	

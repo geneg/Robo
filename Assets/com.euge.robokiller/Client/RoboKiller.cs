@@ -60,10 +60,10 @@ namespace com.euge.robokiller.Client
 			_clientServiceResolver.RegisterService(_inventoryFeature);
 			#endregion
 			
-			await _clientServiceResolver.InitializeServices();
-			
 			//inject collection to some features to transfer items between them
 			new HelperCollection(_clientServiceResolver).InjectCollection();
+			
+			await _clientServiceResolver.InitializeServices();
 			
 			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
 			_themesFeatureFeature.ApplyTheme(_playerFeature);

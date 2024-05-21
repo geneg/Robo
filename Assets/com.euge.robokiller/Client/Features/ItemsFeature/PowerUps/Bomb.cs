@@ -1,7 +1,6 @@
 using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.PlayerFeature;
 using com.euge.robokiller.Configs;
-using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
@@ -13,7 +12,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 			{
 				PowerUpType = data.powerUpType,
 				IsInvertoryItem = true,
-				PowerUpSprite = PowerUpSprite
+				BlowUp = (int) data.EffectValue,
+				PowerUpSprite = PowerUpSprite,
+				
 			};
 		}
 		

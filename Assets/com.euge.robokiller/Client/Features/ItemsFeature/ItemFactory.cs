@@ -18,9 +18,11 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private Transform _parent;
 		private readonly ItemsConfiguration _itemsConfig;
 		private readonly Dictionary<ItemType, Func<ItemLayout, Task<BaseItem>>> _itemCreators;
+		private readonly List<PowerUpEffect> _collection;
 
-		public ItemFactory(Transform parent, ItemsConfiguration itemsConfig)
+		public ItemFactory(Transform parent, List<PowerUpEffect> collection, ItemsConfiguration itemsConfig)
 		{
+			_collection = collection;
 			_parent = parent;
 			_itemsConfig = itemsConfig;
 
@@ -55,7 +57,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 			ItemData data = _itemsConfig.GetItemData(itemLayout.Type);
 			item.SetAdditionalData(data.additionalDataJson);
-			
+			item.SetCollection(_collection);
 			
 			item.transform.position = itemLayout.Position;
 			return item;

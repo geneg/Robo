@@ -13,7 +13,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		public int Rank { get; set; }
 		public int Attack { get; set; }
 		public int Defense { get; set; }
+		public int BlowUp { get; set; }
 		public bool IsUsed => _isUsed;
+		
 		private bool _isUsed;
 		
 		public void Stop()
