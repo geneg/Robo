@@ -29,7 +29,8 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private IInventory _inventory;
 		private bool _isDead;
 		private List<PowerUpEffect> _collection;
-		
+		private PopupFeature.PopupFeature _popupFeature;
+
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
@@ -48,6 +49,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			
 			_inventory = GetServiceResolver.GetService<InventoryFeature.InventoryFeature>();
 			_movementFeature = GetServiceResolver.GetService<MovementFeature>();
+			_popupFeature = GetServiceResolver.GetService<PopupFeature.PopupFeature>();
 		}
 		
 		public void BeginPlayerMove(Vector2 position)
@@ -113,6 +115,11 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 					_isDead = true;
 					effect.Stop();
 					_player.Die();
+					
+					_popupFeature.ShowPopup(false, () =>
+					{
+						//TODO: add logic to restart the game
+					});
 				}
 			}
 		}

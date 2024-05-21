@@ -15,12 +15,15 @@ namespace com.euge.robokiller.Client.Features
 		private ScrollFeature _scroll;
 		private GameObject _movementGameObject;
 		private bool _isPaused;
+		private PopupFeature.PopupFeature _popupFeature;
 
 		public override Task Initialize()
 		{
 			_path = GetServiceResolver.GetService<PathFeature.PathFeature>();
 			_player = GetServiceResolver.GetService<PlayerFeature.PlayerFeature>();
 			_scroll = GetServiceResolver.GetService<ScrollFeature>();
+			_popupFeature = GetServiceResolver.GetService<PopupFeature.PopupFeature>();
+			
 			_movementGameObject = new GameObject("MovementGameObject");
 			
 			_scroll.OnDrag += OnBeginDrag;
@@ -59,13 +62,25 @@ namespace com.euge.robokiller.Client.Features
 					_scroll.MoveTo(position.y);
 				})
 				.OnComplete(() => {
-					if (_path.IsLastSection(_pathIndex)) return;
+					if (_path.IsLastSection(_pathIndex))
+					{
+						GameDone();
+						return;
+					}
 					
 					_pathIndex++;
 					Move();
 				});
 		}
 
+		private void GameDone()
+		{
+			_popupFeature.ShowPopup(true, () => {
+				//todo: restart game logic
+				//load another level
+			});
+		}
+		
 		public void PauseMove()
 		{
 			if (_isPaused) return;

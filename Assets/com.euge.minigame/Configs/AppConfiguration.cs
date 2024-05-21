@@ -10,5 +10,6 @@ namespace com.euge.minigame.Configs
 		public string ThemesConfigurationKey;
 		public string PlayerConfigurationKey;
 		public string ItemsConfigurationKey;
+		public string PopupConfigurationKey;
 	}
 }

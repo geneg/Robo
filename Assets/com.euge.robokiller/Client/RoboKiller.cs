@@ -10,6 +10,7 @@ using com.euge.robokiller.Client.Features.ItemsFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.PathFeature;
 using com.euge.robokiller.Client.Features.PlayerFeature;
+using com.euge.robokiller.Client.Features.PopupFeature;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 
 namespace com.euge.robokiller.Client
@@ -25,6 +26,7 @@ namespace com.euge.robokiller.Client
 		private MovementFeature _movementFeature;
 		private ItemsFeature _itemsFeature;
 		private InventoryFeature _inventoryFeature;
+		private PopupFeature _popupFeature;
 
 		public RoboKiller(VisualBridge visualBridge)
 		{
@@ -58,6 +60,9 @@ namespace com.euge.robokiller.Client
 			
 			_inventoryFeature = new InventoryFeature(appConfig, _visualBridge.InventoryPanel);
 			_clientServiceResolver.RegisterService(_inventoryFeature);
+			
+			_popupFeature = new PopupFeature(appConfig, _visualBridge.PopupParent);
+			_clientServiceResolver.RegisterService(_popupFeature);
 			#endregion
 			
 			//inject collection to some features to transfer items between them
