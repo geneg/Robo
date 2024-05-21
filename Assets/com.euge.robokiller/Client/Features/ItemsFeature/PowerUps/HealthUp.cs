@@ -11,6 +11,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		{
 			_effect = new PowerUpEffect
 			{
+				PowerUpType = data.powerUpType,
 				HealthDelta = (int) data.EffectValue,
 			};
 		}

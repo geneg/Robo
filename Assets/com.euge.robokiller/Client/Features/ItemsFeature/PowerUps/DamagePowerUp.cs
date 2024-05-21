@@ -19,14 +19,17 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		{
 			_attackFrequency = data.EffectFrequency;
 			_attackStrength = data.EffectValue;
+			
+			_effect = new PowerUpEffect
+			{
+				PowerUpType = data.powerUpType,
+				HealthDelta = (int) _attackStrength * -1
+			};
 		}
 
 		public void Apply()
 		{
-			_effect = new PowerUpEffect
-			{
-				HealthDelta = (int) _attackStrength * -1,
-			};
+			
 
 			_effect.OnStopEffect += StopEffect;
 

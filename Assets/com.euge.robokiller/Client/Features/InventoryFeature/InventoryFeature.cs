@@ -14,10 +14,9 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		private readonly string _playerConfigurationKey;
 		private PlayerConfigugation _playerConfig;
 		private readonly InventoryPanel _inventoryPanel;
+		private readonly InventoryData _inventoryData;
+		private readonly List<PowerUpEffect> _collection = new List<PowerUpEffect>();
 		
-		
-		private InventoryData _inventoryData;
-
 		public InventoryFeature(AppConfiguration appConfig, InventoryPanel inventoryPanel)
 		{
 			
@@ -25,7 +24,12 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
 			_inventoryPanel = inventoryPanel;
 		}
-
+		
+		public List<PowerUpEffect> GetCollection()
+		{
+			return _collection;
+		}
+		
 		public override async Task Initialize()
 		{
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
@@ -37,7 +41,7 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 			_inventoryPanel.Init(_inventoryData);
 		}
 
-		public void UpdateInventory(PowerUpEffect effect)
+		public void UpdatePlayerStats(PowerUpEffect effect)
 		{
 			if (effect.HealthDelta != 0)
 			{
@@ -50,19 +54,18 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 				_inventoryData.Rank += effect.Rank;
 				_inventoryPanel.SetRank(_inventoryData.Rank);
 			}
-			
-			if (effect.IsInvertoryItem && _inventoryData.PowerUps.TryAdd(effect.PowerUpType, effect))
-			{
-				_inventoryPanel.AddPowerUp(effect);
-			}
-
 		}
 
+		public void AddPowerUpToView(PowerUpEffect effect)
+		{
+			_inventoryPanel.AddPowerUp(effect);
+		}
+		
 		public InventoryData ReadInventory()
 		{
 			return _inventoryData;
 		}
-
+		
 	}
 
 	public class InventoryData

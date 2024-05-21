@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
@@ -18,7 +19,6 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 	{
 		public List<ThemeableElement> GetThemeableElements() => _player.GetThemeableElements();
 		public float GetSpeed() => _playerConfig.Speed;
-		public event Action<BaseItem> OnItemInteracted;
 		
 		private readonly string _playerConfigurationKey;
 		private Player _player;
@@ -27,12 +27,19 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private MovementFeature _movementFeature;
 		private IInventory _inventory;
 		private bool _isDead;
+		private List<PowerUpEffect> _collection;
+		
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
 			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
 		}
 
+		public void SetCollection(List<PowerUpEffect> collection)
+		{
+			_collection = collection;
+		}
+		
 		public override async Task Initialize()
 		{
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
@@ -44,15 +51,24 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		
 		public void BeginPlayerMove(Vector2 position)
 		{
-			_player.OnItemInteracted += OnItemInteractedInner;
+			_player.OnItemInteracted += OnItemInteracted;
 			_player.OnClicked += OnPlayerClicked;
 			_player.Relax();
 			_player.PlayerTransform.anchoredPosition = position;
 		}
 
+		public void ApplyDelayedPowerUp(PowerUpEffect effect)
+		{
+			if (_collection.All(e => e.PowerUpType != effect.PowerUpType))
+			{
+				_collection.Add(effect);
+				_inventory.AddPowerUpToView(effect);
+			}
+		}
+		
 		public void ApplyPowerUp(PowerUpEffect effect)
 		{
-			_inventory.UpdateInventory(effect);
+			_inventory.UpdatePlayerStats(effect);
 			
 			if (effect.HealthDelta < 0) // if health affected negatively, then check if player is dead
 			{
@@ -74,9 +90,10 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 			_movementFeature.ResumeMove();
 		}
 
-		private void OnItemInteractedInner(BaseItem item)
+		private void OnItemInteracted(BaseItem item)
 		{
-			OnItemInteracted?.Invoke(item); // Forwarding the event
+			item.Interact();
+			_movementFeature.PauseMove();
 		}
 
 		//returns true if player is alive and can interact with the item

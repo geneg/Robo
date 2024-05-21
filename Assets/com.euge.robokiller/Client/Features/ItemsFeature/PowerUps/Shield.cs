@@ -5,15 +5,22 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class Shield : BasePowerUp, IPowerUp
 	{
-		public Shield(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature) { }
-
-		public void Apply()
+		public Shield(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
 			_effect = new PowerUpEffect
 			{
+				PowerUpType = data.powerUpType,
 				IsInvertoryItem = true,
+				Defense = (int) data.EffectValue,
 				PowerUpSprite = PowerUpSprite
 			};
+
+		}
+
+		public void Apply()
+		{
+			
+			_playerFeature.ApplyDelayedPowerUp(_effect);
 		}
 
 		public void StopEffect()

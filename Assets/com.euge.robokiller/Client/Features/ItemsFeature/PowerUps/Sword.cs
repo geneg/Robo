@@ -6,15 +6,23 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class Sword : BasePowerUp, IPowerUp
 	{
-		public Sword(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature) { }
+		private readonly PowerUpData _data;
+		public Sword(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
+		{
+			_data = data;
+		}
 
 		public void Apply()
 		{
 			_effect = new PowerUpEffect
 			{
+				PowerUpType = _data.powerUpType,
 				IsInvertoryItem = true,
+				Attack = (int) _data.EffectValue,
 				PowerUpSprite = PowerUpSprite
 			};
+			
+			_playerFeature.ApplyDelayedPowerUp(_effect);
 		}
 
 		public void StopEffect()

@@ -7,20 +7,21 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class Bomb : BasePowerUp, IPowerUp
 	{
-		
 		public Bomb(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
+			_effect = new PowerUpEffect
+			{
+				PowerUpType = data.powerUpType,
+				IsInvertoryItem = true,
+				PowerUpSprite = PowerUpSprite
+			};
 		}
 		
 		public void Apply()
 		{
-			_effect = new PowerUpEffect
-			{
-				IsInvertoryItem = true,
-				PowerUpSprite = PowerUpSprite
-			};
 			
-			_playerFeature.ApplyPowerUp(_effect);
+			
+			_playerFeature.ApplyDelayedPowerUp(_effect);
 		}
 		
 		public void StopEffect()

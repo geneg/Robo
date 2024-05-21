@@ -11,7 +11,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 		public bool IsInvertoryItem { get; set; }
 		public int HealthDelta { get; set; }
 		public int Rank { get; set; }
-		
+		public int Attack { get; set; }
+		public int Defense { get; set; }
+
 		public void Stop()
 		{
 			OnStopEffect?.Invoke();
