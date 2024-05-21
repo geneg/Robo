@@ -31,6 +31,8 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		private List<PowerUpEffect> _collection;
 		private PopupFeature.PopupFeature _popupFeature;
 
+		//public event Action OnRestart;
+		
 		public PlayerFeature(AppConfiguration appConfig, Transform parent)
 		{
 			_parent = parent;
@@ -119,6 +121,9 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 					_popupFeature.ShowPopup(false, () =>
 					{
 						//TODO: add logic to restart the game
+						
+						
+						
 					});
 				}
 			}

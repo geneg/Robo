@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea87414749e458eadfbe55236d8e141, type: 3}
   m_Name: PopupConfig
   m_EditorClassIdentifier: 
-  AddressableKey: popup
+  AddressableKey: Popup
   winner_text: You Won!!!
   loser_text: You Loose, try again
