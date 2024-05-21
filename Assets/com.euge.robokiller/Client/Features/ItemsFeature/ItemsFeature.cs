@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
+using com.euge.robokiller.Client.Features.InventoryFeature;
 using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Client.Features.PathFeature;
@@ -17,16 +18,23 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private readonly string _itemsConfigurationKey;
 		private ItemsConfiguration _itemsConfig;
 		private List<BaseItem> _items;
-		private InventoryFeature.InventoryFeature _inventoryFeature;
+		private IInventory _inventoryFeature;
 		private MovementFeature _movementFeature;
 		private PlayerFeature.PlayerFeature _playerFeature;
-
+		private List<PowerUpEffect> _collection;
+		
+		
 		public ItemsFeature(AppConfiguration appConfig)
 		{
 			_items = new List<BaseItem>();
 			_itemsConfigurationKey = appConfig.ItemsConfigurationKey;
 		}
 
+		public void SetCollection(List<PowerUpEffect> collection)
+		{
+			_collection = collection;
+		}
+		
 		public override async Task Initialize()
 		{
 			PathFeature.PathFeature pathFeature = GetServiceResolver.GetService<PathFeature.PathFeature>();
@@ -39,7 +47,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 			List<Task<BaseItem>> tasks = new List<Task<BaseItem>>();
 
 			_itemsConfig = await Loaders.LoadAsset<ItemsConfiguration>(_itemsConfigurationKey);
-			ItemFactory itemFactory = new ItemFactory(itemsParent, _itemsConfig);
+			ItemFactory itemFactory = new ItemFactory(itemsParent,_collection, _itemsConfig);
 			PowerUpFactory powerUpFactory = new PowerUpFactory(itemsParent, _playerFeature, _itemsConfig);
 
 			foreach (ItemLayout itemMeta in pathItemsLayout)
@@ -55,9 +63,9 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 				}
 				else
 				{
-					item.RequestPowerUp += async () => {
+					item.RequestPowerUp += () => {
 						List<PowerUpType> exclude = new List<PowerUpType>();
-						var read = _inventoryFeature.ReadInventory();
+						InventoryData read = _inventoryFeature.ReadInventory();
 
 						if (read.TotalHealth == read.Health)
 						{
@@ -66,7 +74,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 						IPowerUp powerUp = powerUpFactory.CreateDynamically(itemMeta.Type, exclude);
 						item.InjectPowerUp(powerUp);
-						
+						return Task.CompletedTask;
 					};
 				}
 
@@ -80,6 +88,22 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 		private void OnItemExhaust()
 		{
+			//update _collection and _inventory
+			List<PowerUpEffect> itemsToRemove = new List<PowerUpEffect>();
+			foreach (PowerUpEffect powerUpEffect in _collection)
+			{
+				if (powerUpEffect.IsUsed)
+				{
+					_inventoryFeature.RemovePowerUpFromView(powerUpEffect);
+					itemsToRemove.Add(powerUpEffect);
+				}
+			}
+
+			foreach (PowerUpEffect powerUpEffect in itemsToRemove)
+			{
+				_collection.Remove(powerUpEffect);
+			}
+
 			_movementFeature.ResumeMove();
 		}
 
@@ -87,7 +111,18 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		{
 			if (_playerFeature.PlayerInteraction())
 			{
-				item.Hit(_inventoryFeature.ReadInventory().Rank);
+				//check collection for attack powerUps
+				int attackBonus = 0;
+				
+				foreach (PowerUpEffect powerUpEffect in _collection)
+				{
+					if (powerUpEffect.Attack <= 0) continue;
+					
+					attackBonus += powerUpEffect.Attack;
+					powerUpEffect.MarkAsUsed();
+				}
+				
+				item.Hit(_inventoryFeature.ReadInventory().Rank + attackBonus);
 			}
 		}
 

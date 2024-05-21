@@ -7,14 +7,11 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 {
 	public class RankUp : BasePowerUp, IPowerUp
 	{
-		
-		private readonly PowerUpEffect _effect;
-		public event PowerUpUpdateHandler OnAnimate;
-
 		public RankUp(PowerUpData data, IPlayerFeature playerFeature) : base(data, playerFeature)
 		{
 			_effect = new PowerUpEffect
 			{
+				PowerUpType = data.powerUpType,
 				Rank = (int) data.EffectValue,
 			};
 		}

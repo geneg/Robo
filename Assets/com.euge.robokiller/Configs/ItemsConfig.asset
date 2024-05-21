@@ -34,7 +34,7 @@ MonoBehaviour:
   - powerUpType: 1
     relatedItemType: 1
     powerUpSprite: {fileID: 21300000, guid: ef393ee64a6d044b7b427f97944c128a, type: 3}
-    EffectFrequency: 1
+    EffectFrequency: 0
     EffectValue: 200
   - powerUpType: 2
     relatedItemType: 1

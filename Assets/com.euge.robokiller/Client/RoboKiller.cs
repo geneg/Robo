@@ -60,8 +60,11 @@ namespace com.euge.robokiller.Client
 			_clientServiceResolver.RegisterService(_inventoryFeature);
 			#endregion
 			
+			//inject collection to some features to transfer items between them
+			new HelperCollection(_clientServiceResolver).InjectCollection();
+			
 			await _clientServiceResolver.InitializeServices();
-
+			
 			_themesFeatureFeature.ApplyTheme(_pathFeatureFeature);
 			_themesFeatureFeature.ApplyTheme(_playerFeature);
 			_themesFeatureFeature.ApplyTheme(_itemsFeature);
@@ -71,18 +74,9 @@ namespace com.euge.robokiller.Client
 
 		private void BeginGame()
 		{
-			_playerFeature.OnItemInteracted += OnItemInteracted;
-
 			_movementFeature.BeginMove();
 			_movementFeature.Move();
 		}
-
-		private void OnItemInteracted(BaseItem item)
-		{
-			item.Interact();
-			_movementFeature.PauseMove();
-		}
-
-
+		
 	}
 }

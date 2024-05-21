@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,10 +16,12 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 		[SerializeField] private GameObject _attack;
 		[SerializeField] private HpBar _hpBar;
 		[SerializeField] private Image _additionalGraphicsImage;
+		
 		private bool _isAttacking;
 		private EnemyData _additionalData;
 		private int _hitPoints;
 		private Tween _currentTween;
+		private List<PowerUpEffect> _collection;
 
 		private void Awake()
 		{
@@ -34,10 +38,32 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			_hpBar.SetValue(_hitPoints);
 			_isAttacking = true;
 			_additionalGraphicsImage.sprite = _powerUp.PowerUpSprite;
-			_powerUp.OnAnimate += AttackAnimation;
+			
+			if (_powerUp is IAnimatablePowerUp animatablePowerUp)
+			{
+				animatablePowerUp.OnAnimate += AttackAnimation;
+			}
+			
 			_powerUp.Apply();
+			
+			//add bomb animation
+			DOVirtual.DelayedCall(0.5f, FindBomb);
+			
 		}
 		
+		private void FindBomb()
+		{
+			foreach (PowerUpEffect powerUpEffect in _collection)
+			{
+				if (powerUpEffect.BlowUp <= 0) continue;
+				powerUpEffect.MarkAsUsed();
+				Hit(powerUpEffect.BlowUp); //using standard Hit-ItemExhaust mechanism
+				break;
+			}
+		}
+
+
+
 		private void AttackAnimation()
 		{
 			AttackState();
@@ -81,18 +107,33 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.Items
 			AdditionalGraphicsAnimation();
 			if (_hitPoints > 0) return;
 			
+			Kill();
+		}
+		
+		private void Kill()
+		{
 			_powerUp.StopEffect();
-			_powerUp.OnAnimate -= AttackAnimation;
+			
+			if (_powerUp is IAnimatablePowerUp animatablePowerUp)
+			{
+				animatablePowerUp.OnAnimate -= AttackAnimation;
+			}
+			
 			_currentTween.Kill();
 			
 			_hpBar.gameObject.SetActive(false);
 			gameObject.SetActive(false);
 			InvokeOnItemExhaust();
 		}
-		
+
 		public void SetAdditionalData(string json)
 		{
 			_additionalData = JsonUtility.FromJson<EnemyData>(json);
+		}
+		
+		public void SetCollection(List<PowerUpEffect> collection)
+		{
+			_collection = collection;
 		}
 	}
 	

@@ -4,7 +4,9 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 {
 	public interface IInventory
 	{
-		void UpdateInventory(PowerUpEffect effect);
+		void UpdatePlayerStats(PowerUpEffect effect);
 		InventoryData ReadInventory();
+		void AddPowerUpToView(PowerUpEffect effect);
+		void RemovePowerUpFromView(PowerUpEffect effect);
 	}
 }

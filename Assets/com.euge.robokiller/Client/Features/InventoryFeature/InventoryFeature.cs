@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using com.euge.minigame.Configs;
 using com.euge.minigame.Services;
@@ -13,16 +14,22 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		private readonly string _playerConfigurationKey;
 		private PlayerConfigugation _playerConfig;
 		private readonly InventoryPanel _inventoryPanel;
-
-		private InventoryData _inventoryData;
-
+		private readonly InventoryData _inventoryData;
+		private readonly List<PowerUpEffect> _collection = new List<PowerUpEffect>();
+		
 		public InventoryFeature(AppConfiguration appConfig, InventoryPanel inventoryPanel)
 		{
+			
 			_inventoryData = new InventoryData();
 			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
 			_inventoryPanel = inventoryPanel;
 		}
-
+		
+		public List<PowerUpEffect> GetCollection()
+		{
+			return _collection;
+		}
+		
 		public override async Task Initialize()
 		{
 			_playerConfig = await Loaders.LoadAsset<PlayerConfigugation>(_playerConfigurationKey);
@@ -34,34 +41,36 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 			_inventoryPanel.Init(_inventoryData);
 		}
 
-		public void UpdateInventory(PowerUpEffect effect)
+		public void UpdatePlayerStats(PowerUpEffect effect)
 		{
-			//health
-			int oldValue = _inventoryData.Health;
-			_inventoryData.Health += effect.HealthDelta;
-			
-			if (oldValue != _inventoryData.Health)
+			if (effect.HealthDelta != 0)
 			{
+				_inventoryData.Health += effect.HealthDelta;
 				_inventoryPanel.SetHealth(_inventoryData.Health);
 			}
 			
-			//rank
-			oldValue = _inventoryData.Rank;
-			_inventoryData.Rank += effect.Rank;
-			
-			if (oldValue != _inventoryData.Rank)
+			if (effect.Rank != 0)
 			{
+				_inventoryData.Rank += effect.Rank;
 				_inventoryPanel.SetRank(_inventoryData.Rank);
 			}
-			
-			
 		}
 
+		public void AddPowerUpToView(PowerUpEffect effect)
+		{
+			_inventoryPanel.AddPowerUp(effect);
+		}
+		
+		public void RemovePowerUpFromView(PowerUpEffect effect)
+		{
+			_inventoryPanel.RemovePowerUp(effect);
+		}
+		
 		public InventoryData ReadInventory()
 		{
 			return _inventoryData;
 		}
-
+		
 	}
 
 	public class InventoryData
@@ -69,5 +78,7 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		public int Health { get; set; }
 		public int Rank { get; set; }
 		public int TotalHealth { get; set; }
+
+		public readonly Dictionary<PowerUpType, PowerUpEffect> PowerUps = new Dictionary<PowerUpType, PowerUpEffect>();
 	}
 }

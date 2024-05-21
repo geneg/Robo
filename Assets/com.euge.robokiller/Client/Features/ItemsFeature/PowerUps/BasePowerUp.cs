@@ -8,6 +8,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature.PowerUps
 	{
 		public Sprite PowerUpSprite { get; }
 		protected readonly IPlayerFeature _playerFeature;
+		protected PowerUpEffect _effect;
 		
 		protected BasePowerUp(PowerUpData data, IPlayerFeature playerFeature)
 		{
