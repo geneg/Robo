@@ -7,5 +7,6 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		void UpdatePlayerStats(PowerUpEffect effect);
 		InventoryData ReadInventory();
 		void AddPowerUpToView(PowerUpEffect effect);
+		void RemovePowerUpFromView(PowerUpEffect effect);
 	}
 }

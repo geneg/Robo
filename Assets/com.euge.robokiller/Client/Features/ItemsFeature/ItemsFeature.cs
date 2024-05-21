@@ -18,7 +18,7 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private readonly string _itemsConfigurationKey;
 		private ItemsConfiguration _itemsConfig;
 		private List<BaseItem> _items;
-		private InventoryFeature.InventoryFeature _inventoryFeature;
+		private IInventory _inventoryFeature;
 		private MovementFeature _movementFeature;
 		private PlayerFeature.PlayerFeature _playerFeature;
 		private List<PowerUpEffect> _collection;
@@ -88,6 +88,22 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 
 		private void OnItemExhaust()
 		{
+			//update _collection and _inventory
+			List<PowerUpEffect> itemsToRemove = new List<PowerUpEffect>();
+			foreach (PowerUpEffect powerUpEffect in _collection)
+			{
+				if (powerUpEffect.IsUsed)
+				{
+					_inventoryFeature.RemovePowerUpFromView(powerUpEffect);
+					itemsToRemove.Add(powerUpEffect);
+				}
+			}
+
+			foreach (PowerUpEffect powerUpEffect in itemsToRemove)
+			{
+				_collection.Remove(powerUpEffect);
+			}
+
 			_movementFeature.ResumeMove();
 		}
 
@@ -95,11 +111,18 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		{
 			if (_playerFeature.PlayerInteraction())
 			{
-				// if clicked it means fight so sword is used if available
+				//check collection for attack powerUps
+				int attackBonus = 0;
 				
-				_collection.ForEach(e => e.Stop());
+				foreach (PowerUpEffect powerUpEffect in _collection)
+				{
+					if (powerUpEffect.Attack <= 0) continue;
+					
+					attackBonus += powerUpEffect.Attack;
+					powerUpEffect.MarkAsUsed();
+				}
 				
-				item.Hit(_inventoryFeature.ReadInventory().Rank);
+				item.Hit(_inventoryFeature.ReadInventory().Rank + attackBonus);
 			}
 		}
 

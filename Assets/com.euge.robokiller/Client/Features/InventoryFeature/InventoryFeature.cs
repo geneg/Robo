@@ -61,6 +61,11 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 			_inventoryPanel.AddPowerUp(effect);
 		}
 		
+		public void RemovePowerUpFromView(PowerUpEffect effect)
+		{
+			_inventoryPanel.RemovePowerUp(effect);
+		}
+		
 		public InventoryData ReadInventory()
 		{
 			return _inventoryData;

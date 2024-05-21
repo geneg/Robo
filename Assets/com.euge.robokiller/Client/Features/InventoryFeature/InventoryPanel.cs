@@ -30,5 +30,10 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		{
 			_powerUpsPanel.AddPowerUp(effect);
 		}
+		
+		public void RemovePowerUp(PowerUpEffect effect)
+		{
+			_powerUpsPanel.RemovePowerUp(effect);
+		}
 	}
 }

@@ -10,6 +10,7 @@ using com.euge.robokiller.Client.Features.ItemsFeature.Items;
 using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Client.Features.ThemesFeature;
 using com.euge.robokiller.Configs;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -61,6 +62,7 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		{
 			if (_collection.All(e => e.PowerUpType != effect.PowerUpType))
 			{
+				Debug.Log("add " + effect.PowerUpType + " to collection");
 				_collection.Add(effect);
 				_inventory.AddPowerUpToView(effect);
 			}
@@ -68,9 +70,41 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 		
 		public void ApplyPowerUp(PowerUpEffect effect)
 		{
-			_inventory.UpdatePlayerStats(effect);
+			int defenseBonus = 0;
+			int idx;
+			for (idx=0; idx<_collection.Count; idx++)
+			{
+				if (_collection[idx].Defense <= 0) continue;
+				break;
+			}
 			
-			if (effect.HealthDelta < 0) // if health affected negatively, then check if player is dead
+			if (effect.HealthDelta < 0 && _collection.Count > idx  && _collection[idx].Defense > 0)
+			{
+				_collection[idx].Defense--;
+				
+				if(_collection[idx].Defense == 0)
+				{
+					_collection[idx].MarkAsUsed();
+					_inventory.RemovePowerUpFromView(_collection[idx]);
+					_collection.RemoveAt(idx);
+				}
+				
+				PowerUpEffect defenseEffect = new PowerUpEffect
+				{
+					PowerUpType = effect.PowerUpType,
+					HealthDelta = 0,
+				};
+				
+				_inventory.UpdatePlayerStats(defenseEffect);
+			}
+			else
+			{
+				_inventory.UpdatePlayerStats(effect);
+			}
+			
+			// if shield is active then the update to inventory was not done,
+			// so the part of code below will play hit animation but will not affect the player health
+			if (effect.HealthDelta < 0) 
 			{
 				_player.Hit();
 				InventoryData inventoryData = _inventory.ReadInventory();

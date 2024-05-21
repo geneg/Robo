@@ -7,9 +7,12 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 	public class PowerUpSlot : MonoBehaviour
 	{
 		[SerializeField] private Image _powerImage;
+		private PowerUpEffect _powerUpEffect;
+		public PowerUpEffect PowerUpEffect => _powerUpEffect;
 		public void SetPowerUp(PowerUpEffect effect)
 		{
-			_powerImage.sprite = effect.PowerUpSprite;
+			_powerUpEffect = effect;
+			_powerImage.sprite = _powerUpEffect.PowerUpSprite;
 			gameObject.SetActive(true);
 		}
 	}
