@@ -17,3 +17,4 @@ MonoBehaviour:
   ThemesConfigurationKey: ThemesConfig
   PlayerConfigurationKey: PlayerConfig
   ItemsConfigurationKey: ItemsConfig
+  PopupConfigurationKey: PopupConfig
