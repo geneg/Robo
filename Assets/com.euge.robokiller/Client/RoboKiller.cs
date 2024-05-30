@@ -40,13 +40,13 @@ namespace com.euge.robokiller.Client
 			AppConfiguration appConfig = _serviceResolver.GetService<Config>().AppConfig;
 
 			#region "Client Features Creation"
-			_themesFeatureFeature = new ThemesFeature(appConfig);
+			_themesFeatureFeature = new ThemesFeature(appConfig.ThemesConfigurationKey);
 			_clientServiceResolver.RegisterService(_themesFeatureFeature);
 
-			_pathFeatureFeature = new PathFeature(appConfig, _visualBridge.GameContentParent);
+			_pathFeatureFeature = new PathFeature(appConfig.LevelsConfigurationKey, _visualBridge.GameContentParent);
 			_clientServiceResolver.RegisterService(_pathFeatureFeature);
 
-			_playerFeature = new PlayerFeature(appConfig, _visualBridge.GameContentParent);
+			_playerFeature = new PlayerFeature(appConfig.PlayerConfigurationKey, _visualBridge.GameContentParent);
 			_clientServiceResolver.RegisterService(_playerFeature);
 
 			_scrollFeature = new ScrollFeature(_visualBridge.ScrollRect);
@@ -55,13 +55,13 @@ namespace com.euge.robokiller.Client
 			_movementFeature = new MovementFeature();
 			_clientServiceResolver.RegisterService(_movementFeature);
 
-			_itemsFeature = new ItemsFeature(appConfig);
+			_itemsFeature = new ItemsFeature(appConfig.ItemsConfigurationKey);
 			_clientServiceResolver.RegisterService(_itemsFeature);
 			
-			_inventoryFeature = new InventoryFeature(appConfig, _visualBridge.InventoryPanel);
+			_inventoryFeature = new InventoryFeature(appConfig.PlayerConfigurationKey, _visualBridge.InventoryPanel);
 			_clientServiceResolver.RegisterService(_inventoryFeature);
 			
-			_popupFeature = new PopupFeature(appConfig, _visualBridge.PopupParent);
+			_popupFeature = new PopupFeature(appConfig.PopupConfigurationKey, _visualBridge.PopupParent);
 			_clientServiceResolver.RegisterService(_popupFeature);
 			#endregion
 			

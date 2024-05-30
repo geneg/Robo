@@ -24,10 +24,10 @@ namespace com.euge.robokiller.Client.Features.ItemsFeature
 		private List<PowerUpEffect> _collection;
 		
 		
-		public ItemsFeature(AppConfiguration appConfig)
+		public ItemsFeature(string configKey)
 		{
 			_items = new List<BaseItem>();
-			_itemsConfigurationKey = appConfig.ItemsConfigurationKey;
+			_itemsConfigurationKey = configKey;
 		}
 
 		public void SetCollection(List<PowerUpEffect> collection)

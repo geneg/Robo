@@ -33,10 +33,10 @@ namespace com.euge.robokiller.Client.Features.PlayerFeature
 
 		//public event Action OnRestart;
 		
-		public PlayerFeature(AppConfiguration appConfig, Transform parent)
+		public PlayerFeature(string configKey, Transform parent)
 		{
 			_parent = parent;
-			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
+			_playerConfigurationKey = configKey;
 		}
 
 		public void SetCollection(List<PowerUpEffect> collection)

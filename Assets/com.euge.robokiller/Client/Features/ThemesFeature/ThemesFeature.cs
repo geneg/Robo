@@ -24,9 +24,9 @@ namespace com.euge.robokiller.Client.Features.ThemesFeature
 		public ThemeTemplate Theme => _theme;
 		private ThemeTemplate _theme;
 		
-		public ThemesFeature(AppConfiguration appConfig)
+		public ThemesFeature(string configKey)
 		{
-			_themesConfigurationKey = appConfig.ThemesConfigurationKey;
+			_themesConfigurationKey = configKey;
 		}
 
 		public override async Task Initialize()

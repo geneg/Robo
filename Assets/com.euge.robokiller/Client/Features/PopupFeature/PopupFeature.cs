@@ -16,10 +16,10 @@ namespace com.euge.robokiller.Client.Features.PopupFeature
 		private readonly Transform _parent;
 		private PopupConfigugation _popupConfig;
 		
-		public PopupFeature(AppConfiguration appConfig, Transform parent)
+		public PopupFeature(string configKey, Transform parent)
 		{
 			_parent = parent;
-			_popupConfigurationKey = appConfig.PopupConfigurationKey;
+			_popupConfigurationKey = configKey;
 		}
 		
 		public override async Task Initialize()

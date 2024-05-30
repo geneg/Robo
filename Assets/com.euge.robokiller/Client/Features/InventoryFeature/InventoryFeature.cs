@@ -5,7 +5,6 @@ using com.euge.minigame.Services;
 using com.euge.minigame.Utils;
 using com.euge.robokiller.Client.Features.ItemsFeature.PowerUps;
 using com.euge.robokiller.Configs;
-using UnityEngine;
 
 namespace com.euge.robokiller.Client.Features.InventoryFeature
 {
@@ -17,11 +16,11 @@ namespace com.euge.robokiller.Client.Features.InventoryFeature
 		private readonly InventoryData _inventoryData;
 		private readonly List<PowerUpEffect> _collection = new List<PowerUpEffect>();
 		
-		public InventoryFeature(AppConfiguration appConfig, InventoryPanel inventoryPanel)
+		public InventoryFeature(string configKey, InventoryPanel inventoryPanel)
 		{
 			
 			_inventoryData = new InventoryData();
-			_playerConfigurationKey = appConfig.PlayerConfigurationKey;
+			_playerConfigurationKey = configKey;
 			_inventoryPanel = inventoryPanel;
 		}
 		

@@ -16,9 +16,9 @@ namespace com.euge.robokiller.Client.Features.PathFeature
 		private readonly Transform _parent;
 		private GameLevel _gameLevel;
 		
-		public PathFeature(AppConfiguration appConfig, Transform parent)
+		public PathFeature(string configKey, Transform parent)
 		{
-			_levelsConfigurationKey = appConfig.LevelsConfigurationKey;
+			_levelsConfigurationKey = configKey;
 			_parent = parent;
 		}
 
